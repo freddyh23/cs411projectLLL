@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html>
+<body>
+<link rel="stylesheet" type="text/css" href="style.css" media="screen" />
+<div class = "navBar">
+    <li><a href="{% url 'updatePage'%}">Update Profile</a></li>
+    <li><a href="{% url 'home'%}">Preferences</a></li>
+    <li><a href="{% url 'profile'%}">Delete Profile</a></li>
+    <li><a href="">Contact</a></li>
+    <li><a href="{% url 'create'%}">Create Profile</a></li>
+    <input type="text" placeholder="Search..">
+</div>
+<br><br><br>
+<h1>Preferences</h1>
+
+<div class = "age">
+    <form action="preferencePerson">
+    <p>Chose the upper bound of the age you want to date: <span id="age_value1"></span> years</p>
+        Max bound:<br>
+        <input type="text" name="maxBound" value=""><br>
+        <br>
+
+
+<!--    <div class="slidecontainer1">-->
+<!--        <input name='range1' type="range" min="1" max="100" value="50" class="slider" id="myRange1">-->
+<!--    </div>-->
+<!--    <script>-->
+<!--            var slider1 = document.getElementById("myRange1");-->
+<!--            var output1 = document.getElementById("age_value1");-->
+<!--            output1.innerHTML = slider1.value; // Display the default slider value-->
+
+<!--            // Update the current slider value (each time you drag the slider handle)-->
+<!--            slider1.oninput = function() {-->
+<!--            output1.innerHTML = this.value;-->
+<!--            }-->
+<!--        </script>-->
+
+    <p>Chose the lower bound of the age you want to date: <span id="age_value2"></span> years</p>
+        Min bound:<br>
+        <input type="text" name="minBound" value=""><br>
+        <br>
+<!--    <div class="slidecontainer2">-->
+<!--        <input name='range2' type="range" min="1" max="100" value="50" class="slider" id="myRange2">-->
+<!--    </div>-->
+<!--    <script>-->
+<!--            var slider2 = document.getElementById("myRange2");-->
+<!--            var output2 = document.getElementById("age_value2");-->
+<!--            output2.innerHTML = slider2.value; // Display the default slider value-->
+
+<!--            // Update the current slider value (each time you drag the slider handle)-->
+<!--            slider2.oninput = function() {-->
+<!--            output2.innerHTML = this.value;-->
+<!--            }-->
+<!--        </script>-->
+        <p>Select the boxes that match your gender preference:</p>
+        <select name="gender">
+            <option value="None">Please select gender</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+        </select>
+
+        <p>Select the boxes that match your ethnic preference:</p>
+        <select name="ethnicity">
+            <option value="None">Please select a ethnicity</option>
+            <option value="east_asian">East Asian</option>
+            <option value="american_indian">American Indian</option>
+            <option value="black_african">Black/African Descent</option>
+            <option value="hispanic_latino">Hispanic/Latino</option>
+            <option value="middle_eastern">Middle Eastern</option>
+            <option value="pacific_islander">Pacific Islander</option>
+            <option value="south_asian">South Asian</option>
+            <option value="whit_caucasian">White/Caucasian</option>
+            <option value="other">Other</option>
+        </select>
+
+
+        <p>University</p>
+        <select name="schools">
+            <option value="None">None</option>
+            <option value="University of Illinois at Urbana Champaign">University of Illinois at Urbana Champaign</option>
+            <option value="University of Michigan at Ann Arbor">University of Michigan at Ann Arbor</option>
+            <option value="University of Illinois Chicago">University of Illinois Chicago</option>
+            <option value="University of Wisconsin">University of Wisconsin</option>
+        </select>
+
+        <p>Select the boxes that match your preferences for what industry they work in:</p>
+        <select name="industry">
+            <option value="None">None</option>
+            <option value="Technology">Technology</option>
+            <option value="Finance">Finance</option>
+            <option value="Pharmaceutical">Pharmaceutical</option>
+            <option value="Health_Care">Health Care</option>
+            <option value="State_and_Local_Government">State and Local Government</option>
+            <option value="Real_Estate">Real Estate</option>
+            <option value="Education">Education</option>
+            <option value="Retail">Retail</option>
+            <option value="Legal">Legal</option>
+            <option value="Medical">Medical</option>
+            <option value="Other">Other</option>
+        </select>
+
+        <input type="submit">
+    </form>
+</div>
+
+<!--<div class = "sex">-->
+<!--    <p>Select the boxes that match your gender preference:</p>-->
+<!--    <input type="checkbox" name="Male" value="Male">Male<br>-->
+<!--    <input type="checkbox" name="Female" value="Female">Female<br>-->
+<!--    <input type="checkbox" name="Both" value="Both">Both<br>-->
+<!--</div>-->
+
+<!--<div class = "height">-->
+<!--    <p>No shorter than: <span id="height_value1"></span> cm</p>-->
+<!--    <div class="slidecontainer3">-->
+<!--        <input type="range" min="100" max="300" value="200" class="slider" id="height_myRange1">-->
+<!--    </div>-->
+<!--    <script>-->
+<!--            var height_slider1 = document.getElementById("height_myRange1");-->
+<!--            var height_output1 = document.getElementById("height_value1");-->
+<!--            height_output1.innerHTML = height_slider1.value; // Display the default slider value-->
+
+<!--            // Update the current slider value (each time you drag the slider handle)-->
+<!--            height_slider1.oninput = function() {-->
+<!--            height_output1.innerHTML = this.value;-->
+<!--            }-->
+<!--        </script>-->
+
+<!--    <p>No taller than: <span id="height_value2"></span> cm</p>-->
+<!--    <div class="slidecontainer4">-->
+<!--        <input type="range" min="100" max="300" value="200" class="slider" id="height_myRange2">-->
+<!--    </div>-->
+<!--    <script>-->
+<!--            var height_slider2 = document.getElementById("height_myRange2");-->
+<!--            var height_output2 = document.getElementById("height_value2");-->
+<!--            height_output2.innerHTML = height_slider2.value; // Display the default slider value-->
+
+<!--            // Update the current slider value (each time you drag the slider handle)-->
+<!--            height_slider2.oninput = function() {-->
+<!--            height_output2.innerHTML = this.value;-->
+<!--            }-->
+<!--        </script>-->
+
+<!--</div>-->
+
+<!--<div class = "ethnicity">-->
+<!--    <p>Select the boxes that match your ethnic preference:</p>-->
+<!--    <input type="checkbox" name="East Asian" value="East Asian">East Asian<br>-->
+<!--    <input type="checkbox" name="American Indian" value="American Indian">American Indian<br>-->
+<!--    <input type="checkbox" name="Black/African Descent" value="Black/African Descent">Black/African Descent<br>-->
+<!--    <input type="checkbox" name="Hispanic/Latino" value="Hispanic/Latino">Hispanic/Latino<br>-->
+<!--    <input type="checkbox" name="Middle Eastern" value="Middle Eastern">Middle Eastern<br>-->
+<!--    <input type="checkbox" name="Pacific Islander" value="Pacific Islander">Pacific Islander<br>-->
+<!--    <input type="checkbox" name="South Asian" value="South Asian">South Asian<br>-->
+<!--    <input type="checkbox" name="White/Caucasian" value="White/Caucasian">White/Caucasian<br>-->
+<!--    <input type="checkbox" name="Other" value="Other">Other<br>-->
+<!--    <input type="checkbox" name="Open to all" value="Open to all">Open to all<br>-->
+<!--</div>-->
+
+<!--<div class = "location">-->
+<!--    <p>No futher than: <span id="location_value"></span> miles</p>-->
+<!--    <div class="location_slider">-->
+<!--        <input type="range" min="0" max="1000" value="500" class="slider" id="location_myRange">-->
+<!--    </div>-->
+<!--    <script>-->
+<!--            var location_slider = document.getElementById("location_myRange");-->
+<!--            var location_output = document.getElementById("location_value");-->
+<!--            location_output.innerHTML = location_slider.value; // Display the default slider value-->
+
+<!--            // Update the current slider value (each time you drag the slider handle)-->
+<!--            location_slider.oninput = function() {-->
+<!--            location_output.innerHTML = this.value;-->
+<!--            }-->
+<!--        </script>-->
+<!--</div>-->
+
+<!--<div class="school">-->
+<!--    <p>University</p>-->
+<!--    <form action="/action_page.php">-->
+<!--        <select name="schools">-->
+<!--            <option value="No preference">No preference</option>-->
+<!--            <option value="University of Illinois at Urbana Champaign">University of Illinois at Urbana Champaign</option>-->
+<!--            <option value="University of Michigan at Ann Arbor">University of Michigan at Ann Arbor</option>-->
+<!--            <option value="University of Illinois Chicago">University of Illinois Chicago</option>-->
+<!--            <option value="University of Wisconsin">University of Wisconsin</option>-->
+<!--        </select>-->
+<!--    </form>-->
+<!--</div>-->
+
+<!--<div class = "industry">-->
+<!--    <p>Select the boxes that match your preferences for what industry they work in:</p>-->
+<!--    <input type="checkbox" name="Technology" value="Technology">Technology<br>-->
+<!--    <input type="checkbox" name="Finance" value="Finance">Finance<br>-->
+<!--    <input type="checkbox" name="Pharmaceutical" value="Pharmaceutical">Pharmaceutical<br>-->
+<!--    <input type="checkbox" name="Health_Care" value="Health_Care">Health Care<br>-->
+<!--    <input type="checkbox" name="State_and_Local_Government" value="State_and_Local_Government">State and Local Government<br>-->
+<!--    <input type="checkbox" name="Real_Estate" value="Real_Estate">Real Estate<br>-->
+<!--    <input type="checkbox" name="Education" value="Education">Education<br>-->
+<!--    <input type="checkbox" name="Retail" value="Retail">Retail<br>-->
+<!--    <input type="checkbox" name="Legal" value="Legal">Legal<br>-->
+<!--    <input type="checkbox" name="Medical" value="Medical">Medical<br>-->
+<!--    <input type="checkbox" name="Other" value="Other">Other<br>-->
+<!--    <input type="checkbox" name="Open to all" value="Open to all">Open to all<br>-->
+<!--</div>-->
+
+<!--<div class = "submit_button">-->
+<!--    <br><br>-->
+<!--    <button class="submit">Submit Preferences</button>-->
+<!--    <br><br>-->
+<!--</div>-->
+
+</body>
+</html>

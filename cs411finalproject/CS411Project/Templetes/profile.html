@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<body>
+<link rel="stylesheet" type="text/css" href="style.css" media="screen" />
+<div class = "navBar">
+    <li><a href="{% url 'updatePage'%}">Update Profile</a></li>
+    <li><a href="{% url 'home'%}">Preferences</a></li>
+    <li><a href="{% url 'profile'%}">Delete Profile</a></li>
+    <li><a href="">Contact</a></li>
+    <li><a href="{% url 'create'%}">Create Profile</a></li>
+    <input type="text" placeholder="Search..">
+</div>
+<br><br><br>
+
+<div class = "delete_profile_field">
+    <form action="deletePerson"> <!-- server page that processes input data -->
+        First Name:<br>
+        <input type="text" name="firstname" value=""><br>
+        <br>
+
+        <div class = "delete_profile_button">
+            <button class="delete_profile">Delete Profile</button>
+            <br><br>
+        </div>
+        </form>
+        </div>
+</body>
+</html>

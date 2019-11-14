@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+<body>
+<link rel="stylesheet" type="text/css" href="style.css" media="screen" />
+<div class = "navBar">
+    <li><a href="{% url 'updatePage'%}">Update Profile</a></li>
+    <li><a href="{% url 'home'%}">Preferences</a></li>
+    <li><a href="{% url 'profile'%}">Delete Profile</a></li>
+    <li><a href="">Contact</a></li>
+    <li><a href="{% url 'create'%}">Create Profile</a></li>
+    <input type="text" placeholder="Search..">
+</div>
+<br><br><br>
+<h1>Create Profile</h1>
+<div class = "create_profile">
+    <form action="gettingInputFromCreate"> <!-- server page that processes input data -->
+        First name:<br>
+        <input type="text" name="firstname" value=""><br>
+        <br>
+        Last name:<br>
+        <input type="text" name="lastname" value=""><br>
+        <br>
+        Password:<br>
+        <input type="text" name="password" value=""><br>
+        <br>
+        Age:<br>
+        <input type="text" name="age" value=""><br>
+        <br>
+        Height:<br>
+        <input type="text" name="height" value=""><br>
+
+
+        <p>Select your gender:</p>
+
+            <select name="gender">
+                <option value="None">Please select gender</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+            </select>
+
+        <p>Select your ethnicity:</p>
+        <select name="ethnicity">
+            <option value="None">Please select a ethnicity</option>
+            <option value="east_asian">East Asian</option>
+            <option value="american_indian">American Indian</option>
+            <option value="black_african">Black/African Descent</option>
+            <option value="hispanic_latino">Hispanic/Latino</option>
+            <option value="middle_eastern">Middle Eastern</option>
+            <option value="pacific_islander">Pacific Islander</option>
+            <option value="south_asian">South Asian</option>
+            <option value="whit_caucasian">White/Caucasian</option>
+            <option value="other">Other</option>
+        </select>
+
+        <p>What university did you attend?</p>
+            <select name="schools">
+                <option value="None">None</option>
+                <option value="University of Illinois at Urbana">University of Illinois at Urbana Champaign</option>
+                <option value="University of Michigan at Ann Arbor">University of Michigan at Ann Arbor</option>
+                <option value="University of Illinois Chicago">University of Illinois Chicago</option>
+                <option value="University of Wisconsin">University of Wisconsin</option>
+            </select>
+
+        <p>What is your job industry?</p>
+            <select name="industry">
+                <option value="None">None</option>
+                <option value="Technology">Technology</option>
+                <option value="Finance">Finance</option>
+                <option value="Pharmaceutical">Pharmaceutical</option>
+                <option value="Health_Care">Health Care</option>
+                <option value="State_and_Local_Government">State and Local Government</option>
+                <option value="Real_Estate">Real Estate</option>
+                <option value="Education">Education</option>
+                <option value="Retail">Retail</option>
+                <option value="Legal">Legal</option>
+                <option value="Medical">Medical</option>
+                <option value="Other">Other</option>
+            </select>
+        <input type="submit">
+    </form>
+</div>
+
+<!--<div class = "gender_profile_creation">-->
+<!--    <p>Select your gender:</p>-->
+<!--    <form action="gettingInputFromCreate.html">-->
+<!--        <select name="schools">-->
+<!--            <option value="None">Please select gender</option>-->
+<!--            <option value="Male">Male</option>-->
+<!--            <option value="Female">Female</option>-->
+<!--        </select>-->
+<!--    </form>-->
+<!--</div>-->
+
+<!--<div class = "ethnicity_profile_creation">-->
+<!--    <p>Select your ethnicity:</p>-->
+<!--    <form action="create_profile.html">-->
+<!--        <select name="schools">-->
+<!--            <option value="None">Please select a ethnicity</option>-->
+<!--            <option value="east_asian">East Asian</option>-->
+<!--            <option value="american_indian">American Indian</option>-->
+<!--            <option value="black_african">Black/African Descent</option>-->
+<!--            <option value="hispanic_latino">Hispanic/Latino</option>-->
+<!--            <option value="middle_eastern">Middle Eastern</option>-->
+<!--            <option value="pacific_islander">Pacific Islander</option>-->
+<!--            <option value="south_asian">South Asian</option>-->
+<!--            <option value="whit_caucasian">White/Caucasian</option>-->
+<!--            <option value="other">Other</option>-->
+<!--        </select>-->
+<!--    </form>-->
+<!--</div>-->
+
+<!--<div class="school_profile_creation">-->
+<!--    <p>What university did you attend?</p>-->
+<!--    <form action="/action_page.php">-->
+<!--        <select name="schools">-->
+<!--            <option value="None">None</option>-->
+<!--            <option value="University of Illinois at Urbana Champaign">University of Illinois at Urbana Champaign</option>-->
+<!--            <option value="University of Michigan at Ann Arbor">University of Michigan at Ann Arbor</option>-->
+<!--            <option value="University of Illinois Chicago">University of Illinois Chicago</option>-->
+<!--            <option value="University of Wisconsin">University of Wisconsin</option>-->
+<!--        </select>-->
+<!--    </form>-->
+<!--</div>-->
+
+<!--<div class="industry_profile_creation">-->
+<!--    <p>What is your job industry?</p>-->
+<!--    <form action="/action_page.php">-->
+<!--        <select name="schools">-->
+<!--            <option value="None">None</option>-->
+<!--            <option value="Technology">Technology</option>-->
+<!--            <option value="Finance">Finance</option>-->
+<!--            <option value="Pharmaceutical">Pharmaceutical</option>-->
+<!--            <option value="Health_Care">Health Care</option>-->
+<!--            <option value="State_and_Local_Government">State and Local Government</option>-->
+<!--            <option value="Real_Estate">Real Estate</option>-->
+<!--            <option value="Education">Education</option>-->
+<!--            <option value="Retail">Retail</option>-->
+<!--            <option value="Legal">Legal</option>-->
+<!--            <option value="Medical">Medical</option>-->
+<!--            <option value="Other">Other</option>-->
+<!--        </select>-->
+<!--    </form>-->
+<!--</div>-->
+
+<!--<div class = "create_profile_button">-->
+<!--    <br><br>-->
+<!--    <button class="create_profile_btn">Create Profile</button>-->
+<!--    <br><br>-->
+<!--</div>-->
+
+</body>
+</html>

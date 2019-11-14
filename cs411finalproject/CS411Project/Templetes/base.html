@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<body>
+<link rel="stylesheet" type="text/css" href="style.css" media="screen" />
+<div class = "navBar">
+    <li><a href="{% url 'updatePage'%}">Update Profile</a></li>
+    <li><a href="{% url 'home'%}">Preferences</a></li>
+    <li><a href="{% url 'profile'%}">Delete Profile</a></li>
+    <li><a href="">Contact</a></li>
+    <li><a href="{% url 'create'%}">Create Profile</a></li>
+    <input type="text" placeholder="Search..">
+</div>
+<br><br><br>
+<h1>Update Information</h1>
+<div class = "create_profile">
+    <form action="updateProfile"> <!-- server page that processes input data -->
+        First Name:<br>
+        <input type="text" name="firstname" value=""><br>
+        <br>
+        Height:<br>
+        <input type="text" name="height" value=""><br>
+        <br>
+        <input type="submit">
+    </form>
+</div>
+
+<!--<div class = "update_button">-->
+<!--    -->
+<!--</div>-->
+
+</body>
+</html>
