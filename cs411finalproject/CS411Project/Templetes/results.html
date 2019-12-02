@@ -1,10 +1,19 @@
 <!DOCTYPE html>
 <html>
 <body>
+<div class = "navBar">
+    <li><a href="{% url 'updatePage'%}">Update Profile</a></li>
+    <li><a href="{% url 'home'%}">Preferences</a></li>
+    <li><a href="{% url 'profile'%}">Delete Profile</a></li>
+    <li><a href="">Contact</a></li>
+    <li><a href="{% url 'create'%}">Create Profile</a></li>
+    <input type="text" placeholder="Search..">
+</div>
+<h1>Results Profile</h1>
     <ul>
 
         {%  for post in all_post %}
-        <li><a href="{% url 'goToBase'%}">Home</a></li>
+        <li>name : {{post}}  </li>
         {% endfor %}
     </ul>
 </body>

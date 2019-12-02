@@ -1,6 +1,9 @@
 from django.shortcuts import render
 from .models import Person
-from django.db import connection
+from django.db import connections, connection
+import random
+import djongo.cursor
+
 
 # Create your views here.
 def home(request):
@@ -23,9 +26,26 @@ def viewProfile(request):
 def updateProfile(request):
     firstName = request.GET.get('firstname')
     height = request.GET.get('height')
-    with connection.cursor() as cursor:
-        cursor.execute('UPDATE calc_person  SET height = %s WHERE firstname = %s ', [height, firstName])
+    # with connections['default'].cursor() as cursor:
+    #     cursor.execute('UPDATE calc_person  SET height = %s WHERE firstname = %s ', [height, firstName])
+
+    # with connections['users_db'].cursor() as cursor:
+    #     djongo.cursor.Cursor(cursor, "users_db", ).execute('db.users.insert({"name": "Freddy Hernandez"})')
+        # cursor.execute('db.users.insert({"name": "Freddy Hernandez"})')
+    # with
+    print("here")
+
+    # with connection.cursor() as cursor:
+    #     cursor.execute('UPDATE calc_person  SET age = %s WHERE firstname = %s ', [age, firstName])
+
+    # with connection.cursor() as cursor:
+    #     cursor.execute('UPDATE calc_person  SET schoolname = %s WHERE firstname = %s ', [school, firstName])
+
+    # with connections['default'].cursor() as cursor:
+    #     cursor.execute('UPDATE calc_person  SET  = %s WHERE firstname = %s ', [height, firstName])
     return render(request, 'base.html')
+
+
 
 #deletes persom based on name
 
@@ -46,11 +66,22 @@ def gettingInputFromCreate(request):
     ethnicity = request.GET['ethnicity']
     school = request.GET['schools']
     industry = request.GET['industry']
-    num = int(Person.objects.count()) + 1
+
+    while 1:
+        uniqueId = random.randint(1,100)
+        with connection.cursor() as cursor:
+            cursor.execute('SELECT p.firstname, p.lastname FROM calc_person p WHERE p.id = %s ',
+                           [uniqueId])
+            rawData = cursor.fetchall()
+        print(rawData)
+        if len(rawData) == 0:
+            break
+        print("id %s", uniqueId)
+
     with connection.cursor() as cursor:
         cursor.execute("INSERT INTO calc_person "
                        "VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s);",
-                       [str(num),  firstName, lastName, ethnicity, gender, industry,  height, school, school])
+                       [str(uniqueId),  firstName, lastName, ethnicity, gender, industry,  height, school, school])
 
     print("finished")
 
@@ -66,11 +97,59 @@ def preferencePerson(request):
     ethnicity = request.GET.get('ethnicity')
     school = request.GET.get('schools')
     industry = request.GET.get('industry')
-    with connection.cursor() as cursor:
-        cursor.execute('SELECT * FROM calc_person p WHERE p.gender = %s', [gender])
-        rawdata = cursor.fetchall()
-        x = []
-        for raw in rawdata:
-            x.append(raw)
-        print(x)
-    return render(request, 'results.html', {'all_post': x})
+
+    if school == "None" and industry == "None" and ethnicity == "None":
+        with connections['default'].cursor() as cursor:
+            cursor.execute('SELECT p.firstname, p.lastname FROM calc_person p WHERE p.gender = %s and '
+                           'p.height BETWEEN %s AND %s ',
+                           [gender, lowerBound, upperBound])
+            rawdata = cursor.fetchall()
+    elif school == "None" and industry == "None" and ethnicity != "None":
+        with connections['default'].cursor() as cursor:
+            cursor.execute('SELECT p.firstname, p.lastname FROM calc_person p WHERE p.gender = %s and '
+                           'p.height BETWEEN %s AND %s AND  p.race = %s',
+                           [gender, lowerBound, upperBound, ethnicity])
+            rawdata = cursor.fetchall()
+
+    elif school == "None" and industry != "None" and ethnicity == "None":
+        with connections['default'].cursor() as cursor:
+            cursor.execute('SELECT p.firstname, p.lastname FROM calc_person p WHERE p.gender = %s and '
+                           'p.height BETWEEN %s AND %s AND  p.companyname = %s',
+                           [gender, lowerBound, upperBound, industry])
+            rawdata = cursor.fetchall()
+    elif school == "None" and industry != "None" and ethnicity != "None":
+        with connections['default'].cursor() as cursor:
+            cursor.execute('SELECT p.firstname, p.lastname FROM calc_person p WHERE p.gender = %s and '
+                           'p.height BETWEEN %s AND %s AND  p.race = %s AND  p.companyname = %s',
+                           [gender, lowerBound, upperBound, ethnicity, industry])
+            rawdata = cursor.fetchall()
+
+    elif school != "None" and industry == "None" and ethnicity == "None":
+        with connection.cursor() as cursor:
+            cursor.execute('SELECT p.firstname, p.lastname FROM calc_person p WHERE p.gender = %s and '
+                           'p.height BETWEEN %s AND %s AND  p.schoolname = %s',
+                           [gender, lowerBound, upperBound, school])
+            rawdata = cursor.fetchall()
+
+    elif school != "None" and industry == "None" and ethnicity != "None":
+        with connections['default'].cursor() as cursor:
+            cursor.execute('SELECT p.firstname, p.lastname FROM calc_person p WHERE p.gender = %s and '
+                           'p.height BETWEEN %s AND %s AND p.schoolname = %s AND  p.race = %s',
+                           [gender, lowerBound, upperBound, school, ethnicity])
+            rawdata = cursor.fetchall()
+
+    elif school != "None" and industry != "None" and ethnicity == "None":
+        with connections['default'].cursor() as cursor:
+            cursor.execute('SELECT p.firstname, p.lastname FROM calc_person p WHERE p.gender = %s and '
+                           'p.height BETWEEN %s AND %s AND p.schoolname = %s AND  p.companyname = %s',
+                           [gender, lowerBound, upperBound, school, industry])
+            rawdata = cursor.fetchall()
+    else:
+        with connections['default'].cursor() as cursor:
+            cursor.execute('SELECT p.firstname, p.lastname FROM calc_person p WHERE p.gender = %s and '
+                           'p.height BETWEEN %s AND %s AND p.schoolname = %s AND p.race = %s AND p.companyname = %s',
+                           [gender, lowerBound, upperBound, school, ethnicity])
+            rawdata = cursor.fetchall()
+
+    print(type(rawdata))
+    return render(request, 'results.html', {'all_post': rawdata})

@@ -22,5 +22,10 @@ class Company(models.Model):
     industry = models.CharField(max_length=50)
     location = models.CharField(max_length=50)
 
+class Users(models.Model):
+    user_name = models.CharField(max_length=25)
+    password = models.CharField(max_length=25)
+    class Meta:
+        app_label = 'user_data'
 
 

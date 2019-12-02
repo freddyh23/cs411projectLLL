@@ -71,6 +71,8 @@ TEMPLATES = [
 WSGI_APPLICATION = 'CS411Project.wsgi.application'
 
 
+DATABASE_ROUTERS = ['CS411Project.routers.Routers']
+DATABASE_APPS_MAPPING = {'user_data': 'users_db'}
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
@@ -81,6 +83,10 @@ DATABASES = {
         'USER': 'postgres',
         'PASSWORD': 'lll',
         'HOST': 'localhost',
+    },
+    'users_db': {
+        'ENGINE': 'djongo',
+        'NAME': 'users',
     }
 }
 
