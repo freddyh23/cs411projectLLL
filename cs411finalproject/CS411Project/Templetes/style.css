@@ -1,344 +1,368 @@
-  .navBar {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-    background-color: #333;
-    position: fixed;
-    top: 0;
-    width: 100%;
-    z-index: 3;
-    font-family: "Arial", Helvetica, sans-serif; 
-  }
-  
-  li {
-    float: left;
-  }
-  
-  li a {
-    display: block;
-    color: white;
-    text-align: center;
-    padding: 14px 16px;
-    text-decoration: none;
-  }
-  
-  /* Change the link color to #111 (black) on hover */
-  li a:hover {
-    background-color: #111;
-  }
+.navBar {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #333;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 3;
+  font-family: "Arial", Helvetica, sans-serif;
+}
 
-  .slidecontainer {
-    width: 100%; /* Width of the outside container */
-  }
-  
-  /* Mouse-over effects */
-  .slider:hover {
-    opacity: 1; /* Fully shown on mouse-over */
-  }
-  
-  .slider {
-    -webkit-appearance: none;
-    width: 20%;
-    height: 15px;
-    border-radius: 5px;  
-    background: #d3d3d3;
-    outline: none;
-    opacity: 0.7;
-    -webkit-transition: .2s;
-    transition: opacity .2s;
-  }
-  
-  .slider::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 25px;
-    height: 25px;
-    border-radius: 50%; 
-    background: #4CAF50;
-    cursor: pointer;
-  }
-  
-  .slider::-moz-range-thumb {
-    width: 25px;
-    height: 25px;
-    border-radius: 50%;
-    background: #4CAF50;
-    cursor: pointer;
-  }
+li {
+  float: left;
+}
 
-  p {
-    font-family: "Arial", Helvetica, sans-serif;
-  }
+li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
 
-  h1 {
-    font-family: "Arial", Helvetica, sans-serif;
-    padding-left: 20px;
-  }
+/* Change the link color to #111 (black) on hover */
+li a:hover {
+  background-color: #111;
+}
 
-  ul {
-    font-family: "Arial", Helvetica, sans-serif;
-  }
+.slidecontainer {
+  width: 100%; /* Width of the outside container */
+}
 
-  .age {
-    padding-left: 20px;
-    font-family: "Arial", Helvetica, sans-serif;  
-  }
-   
-  .sex {
-    padding-left: 20px;
-    font-family: "Arial", Helvetica, sans-serif;  
-  }
+/* Mouse-over effects */
+.slider:hover {
+  opacity: 1; /* Fully shown on mouse-over */
+}
 
-  .height {
-    padding-left: 20px;  
-  }
+.slider {
+  -webkit-appearance: none;
+  width: 20%;
+  height: 15px;
+  border-radius: 5px;
+  background: #d3d3d3;
+  outline: none;
+  opacity: 0.7;
+  -webkit-transition: .2s;
+  transition: opacity .2s;
+}
 
-  .ethnicity {
-    padding-left: 20px;
-    font-family: "Arial", Helvetica, sans-serif;  
-  }
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background: #4CAF50;
+  cursor: pointer;
+}
 
-  .location {
-    padding-left: 20px;
-    font-family: "Arial", Helvetica, sans-serif;  
-  }
+.slider::-moz-range-thumb {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background: #4CAF50;
+  cursor: pointer;
+}
 
-  .profile_page {
-    padding-left: 20px;
-    font-family: "Arial", Helvetica, sans-serif;
-  }
+p {
+  font-family: "Arial", Helvetica, sans-serif;
+}
 
-  .school {
-    padding-left: 20px;
-    font-family: "Arial", Helvetica, sans-serif;  
-  }
+h1 {
+  font-family: "Arial", Helvetica, sans-serif;
+  padding-left: 20px;
+}
 
-  .industry {
-    padding-left: 20px;
-    font-family: "Arial", Helvetica, sans-serif;  
-  }
+ul {
+  font-family: "Arial", Helvetica, sans-serif;
+}
 
-  .submit_button {
-    padding-left: 20px;
-    font-family: "Arial", Helvetica, sans-serif;  
-  }
+.age {
+  padding-left: 20px;
+  font-family: "Arial", Helvetica, sans-serif;
+}
 
-  .submit {
-    border: none;
-    background-color: #4CAF50;
-    color: white;
-    padding: 14px 28px;
-    font-size: 16px;
-    font-family: "Arial", Helvetica, sans-serif; 
-    cursor: pointer;
-    display: inline-block;
-    border-radius: 12px;
-  }
-  
-  .update_profile_button {
-    border: none;
-    background-color: #4CAF50;
-    color: white;
-    padding: 14px 28px;
-    font-size: 16px;
-    font-family: "Arial", Helvetica, sans-serif; 
-    cursor: pointer;
-    display: inline-block;
-    border-radius: 12px;
-  }
+.sex {
+  padding-left: 20px;
+  font-family: "Arial", Helvetica, sans-serif;
+}
 
-  .update_profile_button_wrapper {
-    padding-left: 20px;
-    font-family: "Arial", Helvetica, sans-serif;
-  }
+.height {
+  padding-left: 20px;
+}
 
-  .delete_profile {
-    border: none;
-    background-color: #4CAF50;
-    color: white;
-    padding: 14px 28px;
-    font-size: 16px;
-    font-family: "Arial", Helvetica, sans-serif; 
-    cursor: pointer;
-    display: inline-block;
-    border-radius: 12px;
-  }
+.ethnicity {
+  padding-left: 20px;
+  font-family: "Arial", Helvetica, sans-serif;
+}
 
-  .profile1_button {
-    border: none;
-    background-color: #4CAF50;
-    color: white;
-    padding: 14px 28px;
-    font-size: 16px;
-    font-family: "Arial", Helvetica, sans-serif; 
-    cursor: pointer;
-    display: inline-block;
-    border-radius: 12px;
-  }
+.location {
+  padding-left: 20px;
+  font-family: "Arial", Helvetica, sans-serif;
+}
 
-  .profile2_button {
-    border: none;
-    background-color: #4CAF50;
-    color: white;
-    padding: 14px 28px;
-    font-size: 16px;
-    font-family: "Arial", Helvetica, sans-serif; 
-    cursor: pointer;
-    display: inline-block;
-    border-radius: 12px;
-  }
+.profile_page {
+  padding-left: 20px;
+  font-family: "Arial", Helvetica, sans-serif;
+}
 
-  .profile3_button {
-    border: none;
-    background-color: #4CAF50;
-    color: white;
-    padding: 14px 28px;
-    font-size: 16px;
-    font-family: "Arial", Helvetica, sans-serif; 
-    cursor: pointer;
-    display: inline-block;
-    border-radius: 12px;
-  }
+.school {
+  padding-left: 20px;
+  font-family: "Arial", Helvetica, sans-serif;
+}
 
-  .profile4_button {
-    border: none;
-    background-color: #4CAF50;
-    color: white;
-    padding: 14px 28px;
-    font-size: 16px;
-    font-family: "Arial", Helvetica, sans-serif; 
-    cursor: pointer;
-    display: inline-block;
-    border-radius: 12px;
-  }
-  
-  /* On mouse-over */
-  .submit:hover {background: rgb(26, 192, 26);}
+.industry {
+  padding-left: 20px;
+  font-family: "Arial", Helvetica, sans-serif;
+}
 
-  .update_profile_button:hover {background: rgb(26, 192, 26);}
+.submit_button {
+  padding-left: 20px;
+  font-family: "Arial", Helvetica, sans-serif;
+}
 
-  .delete_profile:hover {background: rgb(26, 192, 26);}
+.submit {
+  border: none;
+  background-color: #4CAF50;
+  color: white;
+  padding: 14px 28px;
+  font-size: 16px;
+  font-family: "Arial", Helvetica, sans-serif;
+  cursor: pointer;
+  display: inline-block;
+  border-radius: 12px;
+}
 
-  .create_profile_btn {
-    border: none;
-    background-color: #4CAF50;
-    color: white;
-    padding: 14px 28px;
-    font-size: 16px;
-    font-family: "Arial", Helvetica, sans-serif; 
-    cursor: pointer;
-    display: inline-block;
-    border-radius: 12px;
-  }
+.update_profile_button {
+  border: none;
+  background-color: #4CAF50;
+  color: white;
+  padding: 14px 28px;
+  font-size: 16px;
+  font-family: "Arial", Helvetica, sans-serif;
+  cursor: pointer;
+  display: inline-block;
+  border-radius: 12px;
+}
 
-  .create_profile_btn:hover {background: rgb(26, 192, 26);}
+.update_profile_button_wrapper {
+  padding-left: 20px;
+  font-family: "Arial", Helvetica, sans-serif;
+}
 
-  .update_btn {
-    border: none;
-    background-color: #4CAF50;
-    color: white;
-    padding: 14px 28px;
-    font-size: 16px;
-    font-family: "Arial", Helvetica, sans-serif; 
-    cursor: pointer;
-    display: inline-block;
-    border-radius: 12px;
-  }
+.delete_profile {
+  border: none;
+  background-color: #4CAF50;
+  color: white;
+  padding: 14px 28px;
+  font-size: 16px;
+  font-family: "Arial", Helvetica, sans-serif;
+  cursor: pointer;
+  display: inline-block;
+  border-radius: 12px;
+}
 
-  .update_btn:hover {background: rgb(26, 192, 26);}
-  
-  html, body {
-    margin:0;
-    padding:0;
-  }
+.profile1_button {
+  border: none;
+  background-color: #4CAF50;
+  color: white;
+  padding: 14px 28px;
+  font-size: 16px;
+  font-family: "Arial", Helvetica, sans-serif;
+  cursor: pointer;
+  display: inline-block;
+  border-radius: 12px;
+}
 
-  .navBar input[type=text] {
-    float: right;
-    padding: 6px;
-    border: none;
-    margin-top: 8px;
-    margin-right: 16px;
-    font-size: 17px;
-  }
-  .user_profile {
-    padding-left: 20px;
-    font-family: "Arial", Helvetica, sans-serif;
-  }
+.profile2_button {
+  border: none;
+  background-color: #4CAF50;
+  color: white;
+  padding: 14px 28px;
+  font-size: 16px;
+  font-family: "Arial", Helvetica, sans-serif;
+  cursor: pointer;
+  display: inline-block;
+  border-radius: 12px;
+}
 
-  .user_profile1 {
-    width: 320px;
-    padding: 10px;
-    border: 5px solid gray;
-    margin: 0;
-  }
+.profile3_button {
+  border: none;
+  background-color: #4CAF50;
+  color: white;
+  padding: 14px 28px;
+  font-size: 16px;
+  font-family: "Arial", Helvetica, sans-serif;
+  cursor: pointer;
+  display: inline-block;
+  border-radius: 12px;
+}
 
-  .user_profile2 {
-    width: 320px;
-    padding: 10px;
-    border: 5px solid gray;
-    margin: 0;
-  }
+.profile4_button {
+  border: none;
+  background-color: #4CAF50;
+  color: white;
+  padding: 14px 28px;
+  font-size: 16px;
+  font-family: "Arial", Helvetica, sans-serif;
+  cursor: pointer;
+  display: inline-block;
+  border-radius: 12px;
+}
 
-  .user_profile3 {
-    width: 320px;
-    padding: 10px;
-    border: 5px solid gray;
-    margin: 0;
-  }
+/* On mouse-over */
+.submit:hover {background: rgb(26, 192, 26);}
 
-  .user_profile4 {
-    width: 320px;
-    padding: 10px;
-    border: 5px solid gray;
-    margin: 0;
-  }
+.update_profile_button:hover {background: rgb(26, 192, 26);}
 
-  .create_profile {
-    padding-left: 20px;
-    font-family: "Arial", Helvetica, sans-serif;
-  }
+.delete_profile:hover {background: rgb(26, 192, 26);}
 
-  .ethnicity_profile_creation {
-    padding-left: 20px;
-    font-family: "Arial", Helvetica, sans-serif;
-  }
+.create_profile_btn {
+  border: none;
+  background-color: #4CAF50;
+  color: white;
+  padding: 14px 28px;
+  font-size: 16px;
+  font-family: "Arial", Helvetica, sans-serif;
+  cursor: pointer;
+  display: inline-block;
+  border-radius: 12px;
+}
 
-  .industry_profile_creation {
-    padding-left: 20px;
-    font-family: "Arial", Helvetica, sans-serif;
-  }
+.create_profile_btn:hover {background: rgb(26, 192, 26);}
 
-  .school_profile_creation {
-    padding-left: 20px;
-    font-family: "Arial", Helvetica, sans-serif;
-  }
+.login_button {
+  border: none;
+  background-color: #4CAF50;
+  color: white;
+  padding: 14px 28px;
+  font-size: 16px;
+  font-family: "Arial", Helvetica, sans-serif;
+  cursor: pointer;
+  display: inline-block;
+  border-radius: 12px;
+}
 
-  .delete_profile_field {
-    padding-left: 20px;
-    font-family: "Arial", Helvetica, sans-serif;
-  }
+.login_button:hover {background: rgb(26, 192, 26);}
 
-  .delete_profile_button {
-    padding-left: 10px;
-    font-family: "Arial", Helvetica, sans-serif;
-  }
+.update_btn {
+  border: none;
+  background-color: #4CAF50;
+  color: white;
+  padding: 14px 28px;
+  font-size: 16px;
+  font-family: "Arial", Helvetica, sans-serif;
+  cursor: pointer;
+  display: inline-block;
+  border-radius: 12px;
+}
 
-  .create_profile_button {
-    padding-left: 20px;
-    font-family: "Arial", Helvetica, sans-serif;
-  }
+.update_btn:hover {background: rgb(26, 192, 26);}
 
-  .update_button {
-    padding-left: 20px;
-    font-family: "Arial", Helvetica, sans-serif;
-  }
+html, body {
+  margin:0;
+  padding:0;
+}
 
-  .gender_profile_creation {
-    padding-left: 20px;
-    font-family: "Arial", Helvetica, sans-serif;
-  }
+.navBar input[type=text] {
+  float: right;
+  padding: 6px;
+  border: none;
+  margin-top: 8px;
+  margin-right: 16px;
+  font-size: 17px;
+}
+.user_profile {
+  padding-left: 20px;
+  font-family: "Arial", Helvetica, sans-serif;
+}
 
-  .profile1_like_button {
-    padding-right: 10px;
-  }
+.user_profile1 {
+  width: 320px;
+  padding: 10px;
+  border: 5px solid gray;
+  margin: 0;
+}
+
+.user_profile2 {
+  width: 320px;
+  padding: 10px;
+  border: 5px solid gray;
+  margin: 0;
+}
+
+.user_profile3 {
+  width: 320px;
+  padding: 10px;
+  border: 5px solid gray;
+  margin: 0;
+}
+
+.user_profile4 {
+  width: 320px;
+  padding: 10px;
+  border: 5px solid gray;
+  margin: 0;
+}
+
+.create_profile {
+  padding-left: 20px;
+  font-family: "Arial", Helvetica, sans-serif;
+}
+
+.ethnicity_profile_creation {
+  padding-left: 20px;
+  font-family: "Arial", Helvetica, sans-serif;
+}
+
+.industry_profile_creation {
+  padding-left: 20px;
+  font-family: "Arial", Helvetica, sans-serif;
+}
+
+.school_profile_creation {
+  padding-left: 20px;
+  font-family: "Arial", Helvetica, sans-serif;
+}
+
+.delete_profile_field {
+  padding-left: 20px;
+  font-family: "Arial", Helvetica, sans-serif;
+}
+
+.delete_profile_button {
+  padding-left: 10px;
+  font-family: "Arial", Helvetica, sans-serif;
+}
+
+.create_profile_button {
+  padding-left: 20px;
+  font-family: "Arial", Helvetica, sans-serif;
+}
+
+.update_button {
+  padding-left: 20px;
+  font-family: "Arial", Helvetica, sans-serif;
+}
+
+.gender_profile_creation {
+  padding-left: 20px;
+  font-family: "Arial", Helvetica, sans-serif;
+}
+
+.profile1_like_button {
+  padding-right: 10px;
+}
+
+.login_button_wrap {
+  padding-left: 20px;
+  font-family: "Arial", Helvetica, sans-serif;
+}
+
+.login_fields {
+  padding-left: 20px;
+  font-family: "Arial", Helvetica, sans-serif;
+}
