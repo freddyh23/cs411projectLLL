@@ -1,22 +1,21 @@
 <!DOCTYPE html>
 <html>
 <body>
+<link rel="stylesheet" type="text/css" href="style.css" media="screen" />
 <div class = "navBar">
     <li><a href="{% url 'updatePage'%}">Update Profile</a></li>
     <li><a href="{% url 'home'%}">Preferences</a></li>
     <li><a href="{% url 'profile'%}">Delete Profile</a></li>
-    <li><a href="">Contact</a></li>
+    <li><a href="{% url 'login'%}">Login</a></li>
     <li><a href="{% url 'create'%}">Create Profile</a></li>
     <input type="text" placeholder="Search..">
 </div>
-<h1>Results Profile</h1>
+<br><br><br>
+<h1>Suggestions</h1>
     <ul>
-
         {%  for post in all_post %}
-        <li>name : {{post}}  </li>
+        <li>{{post}}  </li>
         {% endfor %}
     </ul>
 </body>
 </html>
-
-
