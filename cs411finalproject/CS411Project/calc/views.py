@@ -46,7 +46,6 @@ def updateProfile(request):
     return render(request, 'base.html')
 
 
-
 #deletes persom based on name
 
 def deletePerson(request):
