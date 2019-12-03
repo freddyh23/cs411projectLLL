@@ -345,6 +345,12 @@ html, body {
   font-family: "Arial", Helvetica, sans-serif;
 }
 
+.create_profile_field {
+  padding-left: 20px;
+  font-family: "Arial", Helvetica, sans-serif;
+}
+
+
 .logout_button {
   padding-left: 20px;
   font-family: "Arial", Helvetica, sans-serif;

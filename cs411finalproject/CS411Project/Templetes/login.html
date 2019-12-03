@@ -6,7 +6,6 @@
         <li><a href="{% url 'updatePage'%}">Suggestions</a></li>
         <li><a href="{% url 'home'%}">Preferences</a></li>
         <li><a href="{% url 'profile'%}">Profile</a></li>
-        <li><a href="{% url 'create'%}">Create Profile</a></li>
         <li><a href="{% url 'login'%}">Login</a></li>
         <input type="text" placeholder="Search..">
     </div>
@@ -24,7 +23,14 @@
     </div>
 
     <div class = "login_button_wrap">
-        <input type="submit">
+        <input type="submit" class="Login" value="Login" />
+    </div>
+    <br>
+    <div class = "create_profile_field">
+        <!-- Delete profile button -->
+        Dont have a profile?
+        <br>
+        <input type="submit" class="Create Profile" value="Create Profile" />
     </div>
 
 </body>
