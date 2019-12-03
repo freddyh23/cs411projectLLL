@@ -18,8 +18,10 @@ def createProfilePage(request):
 def viewProfile(request):
     return render(request, 'profile.html')
 
+def login(request):
+    return render(request, 'login.html')
 
-
+UNIQUE_ID = -1
 
 # updates profile with new height
 
@@ -33,32 +35,39 @@ def updateProfile(request):
     ethnicity = request.GET.get('ethnicity')
     university = request.GET.get('university')
     jobIndustry = request.GET.get('jobIndustry')
-    # with connections['default'].cursor() as cursor:
-    #     cursor.execute('UPDATE calc_person  SET height = %s WHERE firstname = %s ', [height, firstName])
 
-    # with connections['users_db'].cursor() as cursor:
-    #     djongo.cursor.Cursor(cursor, "users_db", ).execute('db.users.insert({"name": "Freddy Hernandez"})')
-        # cursor.execute('db.users.insert({"name": "Freddy Hernandez"})')
-    # with
-    print("here")
+    if age != "None":
+        with connections['default'].cursor() as cursor:
+            cursor.execute('UPDATE calc_person  SET age = %s WHERE firstname = %s ', [age, firstName])
+    if height != "None":
+        with connections['default'].cursor() as cursor:
+            cursor.execute('UPDATE calc_person  SET height = %s WHERE firstname = %s ', [height, firstName])
+    if gender != "None":
+        with connection.cursor() as cursor:
+            cursor.execute('UPDATE calc_person  SET gender = %s WHERE firstname = %s ', [gender, firstName])
 
-    # with connection.cursor() as cursor:
-    #     cursor.execute('UPDATE calc_person  SET age = %s WHERE firstname = %s ', [age, firstName])
+    if ethnicity != "None":
+        with connection.cursor() as cursor:
+            cursor.execute('UPDATE calc_person  SET race = %s WHERE firstname = %s ', [ethnicity, firstName])
 
-    # with connection.cursor() as cursor:
-    #     cursor.execute('UPDATE calc_person  SET schoolname = %s WHERE firstname = %s ', [school, firstName])
+    if university != "None":
+        with connection.cursor() as cursor:
+            cursor.execute('UPDATE calc_person  SET schoolname = %s WHERE firstname = %s ', [university, firstName])
 
-    # with connections['default'].cursor() as cursor:
-    #     cursor.execute('UPDATE calc_person  SET  = %s WHERE firstname = %s ', [height, firstName])
+    if jobIndustry != "None":
+        with connection.cursor() as cursor:
+            cursor.execute('UPDATE calc_person  SET companyname = %s WHERE firstname = %s ', [jobIndustry, firstName])
+
     return render(request, 'base.html')
 
 
 #deletes persom based on name
 
 def deletePerson(request):
-    firstName = request.GET['firstname']
+    global UNIQUE_ID
     with connection.cursor() as cursor:
-        cursor.execute('DELETE FROM calc_person p WHERE p.firstname = %s ', [firstName])
+        cursor.execute('DELETE FROM calc_person p WHERE p.id = %s ', [UNIQUE_ID])
+    UNIQUE_ID = -1
     return render(request, 'profile.html')
 
 #creates new user based on inputs
@@ -72,35 +81,40 @@ def gettingInputFromCreate(request):
     ethnicity = request.GET['ethnicity']
     school = request.GET['schools']
     industry = request.GET['industry']
-
-    while 1:
-        uniqueId = random.randint(1,100)
-        with connection.cursor() as cursor:
-            cursor.execute('SELECT p.firstname, p.lastname FROM calc_person p WHERE p.id = %s ',
-                           [uniqueId])
-            rawData = cursor.fetchall()
-        print(rawData)
-        if len(rawData) == 0:
-            break
-        print("id %s", uniqueId)
-
+    state = request.GET['state']
     with connection.cursor() as cursor:
-        cursor.execute("INSERT INTO calc_person "
-                       "VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s);",
-                       [str(uniqueId),  firstName, lastName, ethnicity, gender, industry,  height, school, school])
-
-    print("finished")
+        cursor.execute("INSERT INTO calc_school "
+                       "VALUES(%s, %s, %s, %s);",
+                       [state,state, age, school])
+    # while 1:
+    #     uniqueId = random.randint(1,100)
+    #     with connection.cursor() as cursor:
+    #         cursor.execute('SELECT p.firstname, p.lastname FROM calc_person p WHERE p.id = %s ',
+    #                        [uniqueId])
+    #         rawData = cursor.fetchall()
+    #     print(rawData)
+    #     if len(rawData) == 0:
+    #         break
+    #     print("id %s", uniqueId)
+    #
+    # with connection.cursor() as cursor:
+    #     cursor.execute("INSERT INTO calc_person "
+    #                    "VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s);",
+    #                    [str(uniqueId),  firstName, lastName, ethnicity, gender, industry,  height, school, school, age])
+    # global UNIQUE_ID
+    # UNIQUE_ID = uniqueId
+    # print("finished")
 
     return render(request, 'create_profile.html')
 
-def personal_profile(request):
-    # if(loggedIn)
-        with connections['default'].cursor() as cursor:
-            cursor.execute('SELECT * FROM calc_person',
-                       [gender, lowerBound, upperBound])
-            rawdata = cursor.fetchall()
-
-    return render(request, 'profile.html', {'all_post': rawdata})
+# def personal_profile(request):
+#     # if(loggedIn)
+#         with connections['default'].cursor() as cursor:
+#             cursor.execute('SELECT * FROM calc_person',
+#                        [gender, lowerBound, upperBound])
+#             rawdata = cursor.fetchall()
+#
+#     return render(request, 'profile.html', {'all_post': rawdata})
 #searches based on gender
 
 def preferencePerson(request):
@@ -164,5 +178,4 @@ def preferencePerson(request):
                            [gender, lowerBound, upperBound, school, ethnicity])
             rawdata = cursor.fetchall()
 
-    print(type(rawdata))
     return render(request, 'results.html', {'all_post': rawdata})

@@ -9,6 +9,7 @@ urlpatterns = [
     path('gettingInputFromCreate', views.gettingInputFromCreate, name='gettingInputFromCreate'),
     path('deletePerson', views.deletePerson, name='deletePerson'),
     path('preferencePerson', views.preferencePerson, name='preferencePerson'),
-    path('updateProfile', views.updateProfile, name='updateProfile')
+    path('updateProfile', views.updateProfile, name='updateProfile'),
+    path('login', views.login, name='login')
 
 ]
