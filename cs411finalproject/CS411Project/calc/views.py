@@ -25,7 +25,14 @@ def viewProfile(request):
 
 def updateProfile(request):
     firstName = request.GET.get('firstname')
+    lastName = request.GET.get('lastname')
+    password = request.GET.get('password')
+    age = request.GET.get('age')
     height = request.GET.get('height')
+    gender = request.GET.get('gender')
+    ethnicity = request.GET.get('ethnicity')
+    university = request.GET.get('university')
+    jobIndustry = request.GET.get('jobIndustry')
     # with connections['default'].cursor() as cursor:
     #     cursor.execute('UPDATE calc_person  SET height = %s WHERE firstname = %s ', [height, firstName])
 
