@@ -93,7 +93,24 @@ def gettingInputFromCreate(request):
 
     return render(request, 'create_profile.html')
 
+def personal_profile(request):
+    firstName = request.GET['firstname']
+    lastName = request.GET['lastname']
+    password = request.GET['password']
+    age = request.GET['age']
+    height = request.GET['height']
+    gender = request.GET['gender']
+    ethnicity = request.GET['ethnicity']
+    school = request.GET['schools']
+    industry = request.GET['industry']
 
+    # if(loggedIn)
+        with connections['default'].cursor() as cursor:
+            cursor.execute('SELECT * FROM calc_person',
+                       [gender, lowerBound, upperBound])
+            rawdata = cursor.fetchall()
+
+    return render(request, 'profile.html', {'all_post': rawdata})
 #searches based on gender
 
 def preferencePerson(request):

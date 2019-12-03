@@ -12,6 +12,13 @@
 </div>
 <br><br><br>
 <h1>Profile</h1>
+<ul>
+    {%  for post in all_post %}
+    <li>
+      {{post}}
+    </li>
+    {% endfor %}
+</ul>
 <div class = "delete_profile_field">
     <form action="deletePerson"> <!-- server page that processes input data -->
         First Name:<br>
