@@ -124,6 +124,7 @@ ul {
   font-family: "Arial", Helvetica, sans-serif;
 }
 
+
 input[type=button], input[type=submit], input[type=reset], input[type=delete] {
   background-color: #4CAF50;
   border: none;
@@ -340,6 +341,11 @@ html, body {
 }
 
 .delete_profile_field {
+  padding-left: 20px;
+  font-family: "Arial", Helvetica, sans-serif;
+}
+
+.logout_button {
   padding-left: 20px;
   font-family: "Arial", Helvetica, sans-serif;
 }
