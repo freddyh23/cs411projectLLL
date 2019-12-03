@@ -8,6 +8,7 @@
     <li><a href="{% url 'profile'%}">Profile</a></li>
     <li><a href="{% url 'create'%}">Create Profile</a></li>
     <li><a href="{% url 'login'%}">Login</a></li>
+    <li><a href="{% url 'logout'%}">Logout</a></li>
     <input type="text" placeholder="Search..">
 </div>
 <br><br><br>
@@ -17,7 +18,6 @@
     <form action="preferencePerson">
     <p>Chose the upper bound of the age you want to date:</p>
  <!-- <span id="age_value1"></span> years -->
-        Max bound:<br>
         <input type="text" name="maxBound" value=""><br>
 <!--    <div class="slidecontainer1">-->
 <!--        <input name='range1' type="range" min="1" max="100" value="50" class="slider" id="myRange1">-->
@@ -35,7 +35,6 @@
 
     <p>Chose the lower bound of the age you want to date:</p>
      <!-- <span id="age_value2"></span> years -->
-        Min bound:<br>
         <input type="text" name="minBound" value=""><br>
 <!--    <div class="slidecontainer2">-->
 <!--        <input name='range2' type="range" min="1" max="100" value="50" class="slider" id="myRange2">-->
