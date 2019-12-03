@@ -84,10 +84,10 @@ DATABASES = {
         'PASSWORD': 'lll',
         'HOST': 'localhost',
     },
-    'users_db': {
-        'ENGINE': 'djongo',
-        'NAME': 'users',
-    }
+    # 'users_db': {
+    #     'ENGINE': 'djongo',
+    #     'NAME': 'users',
+    # }
 }
 
 

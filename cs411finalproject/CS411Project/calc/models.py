@@ -10,6 +10,7 @@ class Person(models.Model):
     location = models.CharField(max_length=100)
     schoolname = models.CharField(max_length=100)
     companyname = models.CharField(max_length=30)
+    age = models.IntegerField()
 
 class School(models.Model):
     schoolname = models.CharField(max_length=50, primary_key=True)
@@ -22,10 +23,25 @@ class Company(models.Model):
     industry = models.CharField(max_length=50)
     location = models.CharField(max_length=50)
 
-class Users(models.Model):
-    user_name = models.CharField(max_length=25)
-    password = models.CharField(max_length=25)
-    class Meta:
-        app_label = 'user_data'
+class Perference(models.Model):
+    uid = models.CharField(max_length=10, primary_key=True)
+    gender = models.CharField(max_length=20)
+    heightlowbound = models.IntegerField()
+    heighthighbound = models.IntegerField()
+    agelowbound = models.IntegerField()
+    agehighbound = models.IntegerField()
+    race = models.CharField(max_length=20)
+    location = models.CharField(max_length=100)
+    schoolname = models.CharField(max_length=100)
+    companyname = models.CharField(max_length=30)
+
+class Suggestions(models.Model):
+    uid = models.CharField(max_length=10, primary_key=True)
+    suggested = models.CharField(max_length=10)
+# class Users(models.Model):
+#     user_name = models.CharField(max_length=25)
+#     password = models.CharField(max_length=25)
+#     class Meta:
+#         app_label = 'user_data'
 
 
