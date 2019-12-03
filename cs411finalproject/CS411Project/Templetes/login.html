@@ -3,15 +3,15 @@
 <body>
     <link rel="stylesheet" type="text/css" href="style.css" media="screen" />
     <div class = "navBar">
-        <li><a href="{% url 'updatePage'%}">Update Profile</a></li>
+        <li><a href="{% url 'suggestions'%}">Suggestions</a></li>
         <li><a href="{% url 'home'%}">Preferences</a></li>
-        <li><a href="{% url 'profile'%}">Delete Profile</a></li>
-        <li><a href="{% url 'login'%}">Login</a></li>
+        <li><a href="{% url 'profile'%}">Profile</a></li>
         <li><a href="{% url 'create'%}">Create Profile</a></li>
+        <li><a href="{% url 'login'%}">Login</a></li>
         <input type="text" placeholder="Search..">
     </div>
     <br><br><br>
-
+    <h1>Login</h1>
     <div class = "login_fields">
         <form action="/create_profile.html"> <!-- server page that processes input data -->
             Username:<br>

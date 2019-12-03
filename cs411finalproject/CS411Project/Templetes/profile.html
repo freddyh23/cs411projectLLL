@@ -3,26 +3,27 @@
 <body>
 <link rel="stylesheet" type="text/css" href="style.css" media="screen" />
 <div class = "navBar">
-    <li><a href="{% url 'updatePage'%}">Update Profile</a></li>
+    <li><a href="{% url 'suggestions'%}">Suggestions</a></li>
     <li><a href="{% url 'home'%}">Preferences</a></li>
-    <li><a href="{% url 'profile'%}">Delete Profile</a></li>
-    <li><a href="{% url 'login'%}">Login</a></li>
+    <li><a href="{% url 'profile'%}">Profile</a></li>
     <li><a href="{% url 'create'%}">Create Profile</a></li>
+    <li><a href="{% url 'login'%}">Login</a></li>
     <input type="text" placeholder="Search..">
 </div>
 <br><br><br>
-
+<h1>Profile</h1>
 <div class = "delete_profile_field">
     <form action="deletePerson"> <!-- server page that processes input data -->
         First Name:<br>
         <input type="text" name="firstname" value=""><br>
         <br>
+        Last Name:<br>
+        <input type="text" name="lastname" value=""><br>
+    </form>
+    <br>
+    <!-- Delete profile button -->
 
-        <div class = "delete_profile_button">
-            <button class="delete_profile">Delete Profile</button>
-            <br><br>
-        </div>
-        </form>
-        </div>
+    <input type="submit" class="Delete Profile" value="Delete Profile" />
+</div>
 </body>
 </html>

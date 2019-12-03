@@ -3,11 +3,11 @@
 <body>
 <link rel="stylesheet" type="text/css" href="style.css" media="screen" />
 <div class = "navBar">
-    <li><a href="{% url 'updatePage'%}">Update Profile</a></li>
+    <li><a href="{% url 'suggestions'%}">Suggestions</a></li>
     <li><a href="{% url 'home'%}">Preferences</a></li>
-    <li><a href="{% url 'profile'%}">Delete Profile</a></li>
-    <li><a href="{% url 'login'%}">Login</a></li>
+    <li><a href="{% url 'profile'%}">Profile</a></li>
     <li><a href="{% url 'create'%}">Create Profile</a></li>
+    <li><a href="{% url 'login'%}">Login</a></li>
     <input type="text" placeholder="Search..">
 </div>
 <br><br><br>
@@ -49,7 +49,7 @@
             <option value="other">Other</option>
         </select>
 
-        <p>University</p>
+        <p>University:</p>
             <select name="schools">
                 <option value="None">None</option>
                 <option value="University of Illinois at Urbana">University of Illinois at Urbana Champaign</option>
@@ -58,7 +58,7 @@
                 <option value="University of Wisconsin">University of Wisconsin</option>
             </select>
 
-        <p>Job Industry</p>
+        <p>Job Industry:</p>
             <select name="industry">
                 <option value="None">None</option>
                 <option value="Technology">Technology</option>
