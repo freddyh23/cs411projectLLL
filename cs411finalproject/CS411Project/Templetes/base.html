@@ -11,15 +11,69 @@
     <input type="text" placeholder="Search..">
 </div>
 <br><br><br>
-<h1>Update Information</h1>
+<h1>Update Profile</h1>
 <div class = "create_profile">
     <form action="updateProfile"> <!-- server page that processes input data -->
         First Name:<br>
         <input type="text" name="firstname" value=""><br>
         <br>
+        Last Name:<br>
+        <input type="text" name="firstname" value=""><br>
+        <br>
+        Password:<br>
+        <input type="text" name="password" value=""><br>
+        <br>
+        Age:<br>
+        <input type="text" name="age" value=""><br>
+        <br>
         Height:<br>
         <input type="text" name="height" value=""><br>
-        <br>
+        <p>Select your gender:</p>
+        <select name="gender">
+            <option value="None">Please select gender</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+        </select>
+
+        <p>Ethnicity:</p>
+        <select name="ethnicity">
+            <option value="None">Please select a ethnicity</option>
+            <option value="east_asian">East Asian</option>
+            <option value="american_indian">American Indian</option>
+            <option value="black_african">Black/African Descent</option>
+            <option value="hispanic_latino">Hispanic/Latino</option>
+            <option value="middle_eastern">Middle Eastern</option>
+            <option value="pacific_islander">Pacific Islander</option>
+            <option value="south_asian">South Asian</option>
+            <option value="whit_caucasian">White/Caucasian</option>
+            <option value="other">Other</option>
+        </select>
+
+        <p>University</p>
+            <select name="schools">
+                <option value="None">None</option>
+                <option value="University of Illinois at Urbana">University of Illinois at Urbana Champaign</option>
+                <option value="University of Michigan at Ann Arbor">University of Michigan at Ann Arbor</option>
+                <option value="University of Illinois Chicago">University of Illinois Chicago</option>
+                <option value="University of Wisconsin">University of Wisconsin</option>
+            </select>
+
+        <p>Job Industry</p>
+            <select name="industry">
+                <option value="None">None</option>
+                <option value="Technology">Technology</option>
+                <option value="Finance">Finance</option>
+                <option value="Pharmaceutical">Pharmaceutical</option>
+                <option value="Health_Care">Health Care</option>
+                <option value="State_and_Local_Government">State and Local Government</option>
+                <option value="Real_Estate">Real Estate</option>
+                <option value="Education">Education</option>
+                <option value="Retail">Retail</option>
+                <option value="Legal">Legal</option>
+                <option value="Medical">Medical</option>
+                <option value="Other">Other</option>
+            </select>
+        <br><br>
         <input type="submit">
     </form>
 </div>
