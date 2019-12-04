@@ -76,7 +76,6 @@ def updateProfile(request):
 
 
 
-
     global UNIQUE_ID
 
     if firstName is not None:
@@ -161,7 +160,12 @@ def gettingInputFromCreate(request):
     UNIQUE_ID = uniqueId
     print("finished", UNIQUE_ID)
 
-    return render(request, 'create_profile.html')
+    with connections['default'].cursor() as cursor:
+        cursor.execute('SELECT * FROM calc_person p Where p.id = %s',
+                       [UNIQUE_ID])
+        rawdata = cursor.fetchall()
+
+    return render(request, 'profile.html', {'all_post': rawdata})
 
 def personal_profile(request):
     with connections['default'].cursor() as cursor:
@@ -234,9 +238,16 @@ def preferencePerson(request):
             rawdata = cursor.fetchall()
 
     global UNIQUE_ID
+
     with connection.cursor() as cursor:
-        cursor.execute("INSERT INTO calc_perference "
-                       "VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s);",
-                       [UNIQUE_ID,  gender, lowerBound, upperBound, 0, 0,  ethnicity, school, school, industry])
+        cursor.execute('SELECT * FROM calc_perference p WHERE p.uid = %s',
+                       [UNIQUE_ID])
+    alreadyInclude = cursor.fetchall()
+
+    if len(alreadyInclude) == 0:
+        with connection.cursor() as cursor:
+            cursor.execute("INSERT INTO calc_perference "
+                           "VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s);",
+                           [UNIQUE_ID,  gender, lowerBound, upperBound, 0, 0,  ethnicity, school, school, industry])
 
     return render(request, 'results.html')
