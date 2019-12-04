@@ -72,11 +72,12 @@ WSGI_APPLICATION = 'CS411Project.wsgi.application'
 
 
 DATABASE_ROUTERS = ['CS411Project.routers.Routers']
-DATABASE_APPS_MAPPING = {'user_data': 'users_db'}
+DATABASE_APPS_MAPPING = {'user_data': 'users'}
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
 DATABASES = {
+
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'Cs411Database',

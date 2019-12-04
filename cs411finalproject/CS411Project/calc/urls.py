@@ -11,6 +11,8 @@ urlpatterns = [
     path('preferencePerson', views.preferencePerson, name='preferencePerson'),
     path('updateProfile', views.updateProfile, name='updateProfile'),
     path('suggestions', views.suggestions, name='suggestions'),
-    path('login', views.login, name='login')
+    path('login', views.login, name='login'),
+    path('logout', views.logout, name='logout'),
+    path('login_action', views.login_action, name='login_action')
 
 ]

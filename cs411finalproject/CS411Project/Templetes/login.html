@@ -14,25 +14,27 @@
     <br><br><br>
     <h1>Login</h1>
     <div class = "login_fields">
-        <form action="/create_profile.html"> <!-- server page that processes input data -->
+        <form action="login_action"> <!-- server page that processes input data -->
             Username:<br>
             <input type="text" name="username" value=""><br>
             <br>
             Password:<br>
             <input type="text" name="password" value=""><br>
             <br>
+            <input type="submit" class="Login" value="Login" />
         </form>
     </div>
 
-    <div class = "login_button_wrap">
-        <input type="submit" class="Login" value="Login" />
-    </div>
+
+
+
     <br>
     <div class = "create_profile_field">
         <!-- Delete profile button -->
         Dont have a profile?
-        <br>
-        <input type="submit" class="Create Profile" value="Create Profile" />
+        <form action="create"> <!-- server page that processes input data -->
+            <input type="submit" class="Create User" value="Create User" />
+        </form>
     </div>
 
 </body>

@@ -8,7 +8,7 @@ class Routers:
         Attempts to read user models go to users_db.
         """
         if model._meta.app_label == 'user_data':
-            return 'users_db'
+            return 'users'
         return None
 
     def db_for_write(self, model, **hints):
@@ -16,7 +16,7 @@ class Routers:
         Attempts to write user models go to users_db.
         """
         if model._meta.app_label == 'user_data':
-            return 'users_db'
+            return 'users'
         return None
 
     def allow_relation(self, obj1, obj2, **hints):
@@ -34,5 +34,5 @@ class Routers:
         database.
         """
         if app_label == 'user_data':
-            return db == 'users_db'
+            return db == 'users'
         return None

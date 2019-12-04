@@ -1,8 +1,7 @@
 from django.shortcuts import render
-from .models import Person
+from .models import Users
 from django.db import connections, connection
 import random
-import djongo.cursor
 
 
 # Create your views here.
@@ -16,13 +15,48 @@ def createProfilePage(request):
     return render(request, 'create_profile.html')
 
 def viewProfile(request):
-    return render(request, 'profile.html')
+    print(UNIQUE_ID)
+    with connections['default'].cursor() as cursor:
+        cursor.execute('SELECT * FROM calc_person p Where p.id = %s',
+                       [UNIQUE_ID])
+        rawdata = cursor.fetchall()
+    print(rawdata)
+    return render(request, 'profile.html', {'all_post': rawdata})
 
 def login(request):
     return render(request, 'login.html')
 
+def logout(request):
+    global UNIQUE_ID
+    UNIQUE_ID = -1
+    return render(request, 'login.html')
+
+def login_action(request):
+
+    username = request.GET.get('username')
+    password = request.GET.get('password')
+
+    results = list(Users.objects.using('users_db').filter(user_name=username, password=password))
+
+    if len(results) == 0:
+        return render(request, 'login.html')
+
+    global UNIQUE_ID
+    for e in Users.objects.using('users_db').filter(user_name=username, password=password):
+        UNIQUE_ID = int(e.uid)
+
+    # print("results: ", results.user_name)
+    # user = Users()
+    # user.user_name = username
+    # user.password = password
+    # user.save()
+
+
+    return render(request, 'profile.html')
+
 def suggestions(request):
     return render(request, 'results.html')
+
 UNIQUE_ID = -1
 
 # updates profile with new height
@@ -40,7 +74,11 @@ def updateProfile(request):
     university = request.GET.get('university')
     jobIndustry = request.GET.get('jobIndustry')
 
+
+
+
     global UNIQUE_ID
+
     if firstName is not None:
         with connections['default'].cursor() as cursor:
             cursor.execute('UPDATE calc_person  SET firstname = %s WHERE id = %s ', [firstName, UNIQUE_ID])
@@ -81,12 +119,13 @@ def deletePerson(request):
     with connection.cursor() as cursor:
         cursor.execute('DELETE FROM calc_person p WHERE p.id = %s ', [UNIQUE_ID])
     UNIQUE_ID = -1
-    return render(request, 'profile.html')
+    return render(request, 'login.html')
 
 #creates new user based on inputs
 def gettingInputFromCreate(request):
     firstName = request.GET['firstname']
     lastName = request.GET['lastname']
+    username = request.GET.get('username')
     password = request.GET['password']
     age = request.GET['age']
     height = request.GET['height']
@@ -97,7 +136,7 @@ def gettingInputFromCreate(request):
 
     while 1:
         uniqueId = random.randint(1,100)
-        with connection.cursor() as cursor:
+        with connections['default'].cursor() as cursor:
             cursor.execute('SELECT p.firstname, p.lastname FROM calc_person p WHERE p.id = %s ',
                            [uniqueId])
             rawData = cursor.fetchall()
@@ -106,13 +145,21 @@ def gettingInputFromCreate(request):
             break
         print("id %s", uniqueId)
 
-    with connection.cursor() as cursor:
+    with connections['default'].cursor() as cursor:
         cursor.execute("INSERT INTO calc_person "
                        "VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s);",
-                       [str(uniqueId),  firstName, lastName, ethnicity, gender, industry,  height, school, school, age])
+                       [str(uniqueId),  firstName, lastName, gender, height, ethnicity, industry, school,
+                        industry, age])
+
+    user = Users()
+    user.user_name = username
+    user.password = password
+    user.uid = uniqueId
+    user.save(using='users_db')
+
     global UNIQUE_ID
     UNIQUE_ID = uniqueId
-    print("finished" , UNIQUE_ID)
+    print("finished", UNIQUE_ID)
 
     return render(request, 'create_profile.html')
 
@@ -192,4 +239,4 @@ def preferencePerson(request):
                        "VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s);",
                        [UNIQUE_ID,  gender, lowerBound, upperBound, 0, 0,  ethnicity, school, school, industry])
 
-    return render(request, 'results.html', {'all_post': rawdata})
+    return render(request, 'results.html')
