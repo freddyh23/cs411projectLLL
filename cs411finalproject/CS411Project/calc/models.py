@@ -1,4 +1,5 @@
 from django.db import models
+from djongo import models as mo
 
 # Create your models here.
 class Person(models.Model):
@@ -38,10 +39,11 @@ class Perference(models.Model):
 class Suggestions(models.Model):
     uid = models.CharField(max_length=10, primary_key=True)
     suggested = models.CharField(max_length=10)
-# class Users(models.Model):
-#     user_name = models.CharField(max_length=25)
-#     password = models.CharField(max_length=25)
-#     class Meta:
-#         app_label = 'user_data'
+
+class Users(mo.Model):
+    user_name = models.CharField(max_length=25)
+    password = models.CharField(max_length=25)
+    class Meta:
+        app_label = 'user_data'
 
 

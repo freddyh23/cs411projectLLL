@@ -21,6 +21,8 @@ def viewProfile(request):
 def login(request):
     return render(request, 'login.html')
 
+def suggestions(request):
+    return render(request, 'results.html')
 UNIQUE_ID = -1
 
 # updates profile with new height
@@ -92,7 +94,6 @@ def gettingInputFromCreate(request):
     ethnicity = request.GET['ethnicity']
     school = request.GET['schools']
     industry = request.GET['industry']
-    # state = request.GET['state']
 
     while 1:
         uniqueId = random.randint(1,100)
@@ -115,15 +116,14 @@ def gettingInputFromCreate(request):
 
     return render(request, 'create_profile.html')
 
-# def personal_profile(request):
-#     # if(loggedIn)
-#         with connections['default'].cursor() as cursor:
-#             cursor.execute('SELECT * FROM calc_person',
-#                        [gender, lowerBound, upperBound])
-#             rawdata = cursor.fetchall()
-#
-#     return render(request, 'profile.html', {'all_post': rawdata})
-#searches based on gender
+def personal_profile(request):
+    with connections['default'].cursor() as cursor:
+        cursor.execute('SELECT * FROM calc_person p Where p.id = %s',
+                   [UNIQUE_ID])
+        rawdata = cursor.fetchall()
+
+    return render(request, 'profile.html', {'all_post': rawdata})
+# searches based on gender
 
 def preferencePerson(request):
     upperBound = request.GET['maxBound']
