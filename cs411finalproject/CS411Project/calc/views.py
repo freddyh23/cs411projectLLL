@@ -14,6 +14,9 @@ def home(request):
 def updatePage(request):
     return render(request, 'base.html')
 
+def allusers(request):
+    return render(request, 'allusers.html')
+
 def createProfilePage(request):
     return render(request, 'create_profile.html')
 
@@ -56,11 +59,6 @@ def login_action(request):
     for e in Users.objects.using('users_db').filter(user_name=username):
         UNIQUE_ID = int(e.uid)
 
-    # print("results: ", results.user_name)
-    # user = Users()
-    # user.user_name = username
-    # user.password = password
-    # user.save()
     with connections['default'].cursor() as cursor:
         cursor.execute('SELECT * FROM calc_person p Where p.id = %s',
                        [UNIQUE_ID])
@@ -69,7 +67,20 @@ def login_action(request):
     return render(request, 'profile.html', {'all_post': rawdata})
 
 def suggestions(request):
-    return render(request, 'results.html')
+
+    with connections['default'].cursor() as cursor:
+        cursor.execute('SELECT * FROM calc_suggestions p WHERE p.uid = %s ',
+                       [str(UNIQUE_ID)])
+        ids = namedtuplefetchall(cursor)
+    print(ids)
+    all_post = []
+    for i in range(0, len(ids)):
+        with connections['default'].cursor() as cursor:
+            cursor.execute('SELECT p.firstname, p.lastname, p.age FROM calc_person p WHERE p.id = %s ', [str(ids[i].suggested)])
+            rawdata = namedtuplefetchall(cursor)
+            person = [rawdata[0].firstname, rawdata[0].lastname]
+        all_post.append(person)
+    return render(request, 'results.html', {'all_post': all_post})
 
 
 
@@ -79,7 +90,6 @@ def updateProfile(request):
     firstName = request.GET.get('firstname')
     lastName = request.GET.get('lastname')
     password = request.GET.get('password')
-    age = 0
     age = request.GET.get('age')
 
     height = request.GET.get('height')
@@ -88,22 +98,24 @@ def updateProfile(request):
     university = request.GET.get('university')
     jobIndustry = request.GET.get('jobIndustry')
 
-
+    print("lastname: ",lastName)
 
     global UNIQUE_ID
 
-    if firstName is not None:
+    if firstName != "":
         with connections['default'].cursor() as cursor:
             cursor.execute('UPDATE calc_person  SET firstname = %s WHERE id = %s ', [firstName, UNIQUE_ID])
 
-    if lastName is not None:
+    if lastName != "":
+        print("in LastName")
         with connections['default'].cursor() as cursor:
             cursor.execute('UPDATE calc_person  SET lastname = %s WHERE id = %s ', [lastName, UNIQUE_ID])
 
-    if age is not None:
+    if age != "":
+        print("Here")
         with connections['default'].cursor() as cursor:
             cursor.execute('UPDATE calc_person  SET age = %s WHERE id = %s ', [age, UNIQUE_ID])
-    if height is not None:
+    if height != "":
         with connections['default'].cursor() as cursor:
             cursor.execute('UPDATE calc_person  SET height = %s WHERE id = %s ', [height, UNIQUE_ID])
     if gender != "None":
@@ -131,6 +143,8 @@ def deletePerson(request):
     global UNIQUE_ID
     with connection.cursor() as cursor:
         cursor.execute('DELETE FROM calc_person p WHERE p.id = %s ', [UNIQUE_ID])
+    user = Users.objects.using('users_db').get(uid=UNIQUE_ID)
+    user.delete()
     UNIQUE_ID = -1
     return render(request, 'login.html')
 
@@ -199,93 +213,207 @@ def preferencePerson(request):
     ethnicity = request.GET.get('ethnicity')
     school = request.GET.get('schools')
     industry = request.GET.get('industry')
+    state = request.GET.get('state')
+    maxBoundAge = request.GET.get('maxBoundAge')
+    minBoundAge = request.GET.get('minBoundAge')
+
+    if upperBound == "" or lowerBound == "" or gender == "None"\
+            or maxBoundAge == "" or minBoundAge == "":
+        return render(request, 'home.html')
 
     global UNIQUE_ID
 
     if school == "None" and industry == "None" and ethnicity == "None":
         with connections['default'].cursor() as cursor:
             cursor.execute('SELECT p.firstname, p.lastname FROM calc_person p WHERE p.gender = %s and '
-                           'p.height BETWEEN %s AND %s ',
-                           [gender, lowerBound, upperBound])
+                           'p.height BETWEEN %s AND %s AND p.age BETWEEN %s AND %s',
+                           [gender, lowerBound, upperBound, minBoundAge, maxBoundAge])
             rawdata = cursor.fetchall()
 
         with connections['default'].cursor() as cursor:
             cursor.execute('SELECT p.id FROM calc_person p WHERE p.gender = %s and '
-                           'p.height BETWEEN %s AND %s ',
-                           [gender, lowerBound, upperBound])
+                           'p.height BETWEEN %s AND %s AND p.age BETWEEN %s AND %s',
+                           [gender, lowerBound, upperBound, minBoundAge, maxBoundAge])
             ids = namedtuplefetchall(cursor)
-        print("ids: ", ids[0].id)
+
+        deleteSuggestion()
 
         for i in range(0, len(ids)):
             print("i: ", type(i))
+            randonID = choosingUID()
             with connections['default'].cursor() as cursor:
                 cursor.execute('INSERT INTO calc_suggestions '
-                               'VALUES(%s, %s);',
-                       [UNIQUE_ID, ids[int(i)].id])
+                               'VALUES(%s,%s, %s);',
+                       [randonID,UNIQUE_ID, ids[int(i)].id])
 
     elif school == "None" and industry == "None" and ethnicity != "None":
         with connections['default'].cursor() as cursor:
             cursor.execute('SELECT p.firstname, p.lastname FROM calc_person p WHERE p.gender = %s and '
-                           'p.height BETWEEN %s AND %s AND  p.race = %s',
-                           [gender, lowerBound, upperBound, ethnicity])
+                           'p.height BETWEEN %s AND %s AND  p.race = %s AND p.age BETWEEN %s AND %s',
+                           [gender, lowerBound, upperBound, ethnicity, minBoundAge, maxBoundAge])
             rawdata = cursor.fetchall()
+
+        with connections['default'].cursor() as cursor:
+            cursor.execute('SELECT p.id FROM calc_person p WHERE p.gender = %s and '
+                           'p.height BETWEEN %s AND %s AND  p.race = %s AND p.age BETWEEN %s AND %s',
+                           [gender, lowerBound, upperBound, minBoundAge, maxBoundAge])
+            ids = namedtuplefetchall(cursor)
+        print("ids: ", ids[0].id)
+        deleteSuggestion()
+        for i in range(0, len(ids)):
+            print("i: ", type(i))
+            randonID = choosingUID()
+            with connections['default'].cursor() as cursor:
+                cursor.execute('INSERT INTO calc_suggestions '
+                               'VALUES(%s,%s, %s);',
+                               [randonID,UNIQUE_ID, ids[int(i)].id])
 
     elif school == "None" and industry != "None" and ethnicity == "None":
         with connections['default'].cursor() as cursor:
             cursor.execute('SELECT p.firstname, p.lastname FROM calc_person p WHERE p.gender = %s and '
-                           'p.height BETWEEN %s AND %s AND  p.companyname = %s',
-                           [gender, lowerBound, upperBound, industry])
+                           'p.height BETWEEN %s AND %s AND  p.companyname = %s AND p.age BETWEEN %s AND %s',
+                           [gender, lowerBound, upperBound, industry, minBoundAge, maxBoundAge])
             rawdata = cursor.fetchall()
+
+        with connections['default'].cursor() as cursor:
+            cursor.execute('SELECT p.id FROM calc_person p WHERE p.gender = %s and '
+                           'p.height BETWEEN %s AND %s AND  p.companyname = %s AND p.age BETWEEN %s AND %s',
+                           [gender, lowerBound, upperBound, minBoundAge, maxBoundAge])
+            ids = namedtuplefetchall(cursor)
+        print("ids: ", ids[0].id)
+        deleteSuggestion()
+        for i in range(0, len(ids)):
+            print("i: ", type(i))
+            randonID = choosingUID()
+            with connections['default'].cursor() as cursor:
+                cursor.execute('INSERT INTO calc_suggestions '
+                               'VALUES(%s,%s, %s);',
+                               [randonID,UNIQUE_ID, ids[int(i)].id])
+
+
     elif school == "None" and industry != "None" and ethnicity != "None":
         with connections['default'].cursor() as cursor:
             cursor.execute('SELECT p.firstname, p.lastname FROM calc_person p WHERE p.gender = %s and '
-                           'p.height BETWEEN %s AND %s AND  p.race = %s AND  p.companyname = %s',
-                           [gender, lowerBound, upperBound, ethnicity, industry])
+                           'p.height BETWEEN %s AND %s AND  p.race = %s AND  p.companyname = %s AND p.age BETWEEN %s AND %s',
+                           [gender, lowerBound, upperBound, ethnicity, industry, minBoundAge, maxBoundAge])
             rawdata = cursor.fetchall()
+
+
+        with connections['default'].cursor() as cursor:
+            cursor.execute('SELECT p.id FROM calc_person p WHERE p.gender = %s and '
+                           'p.height BETWEEN %s AND %s AND  p.race = %s AND  p.companyname = %s AND p.age BETWEEN %s AND %s',
+                           [gender, lowerBound, upperBound, minBoundAge, maxBoundAge])
+            ids = namedtuplefetchall(cursor)
+        print("ids: ", ids[0].id)
+        deleteSuggestion()
+        for i in range(0, len(ids)):
+            print("i: ", type(i))
+            randonID = choosingUID()
+            with connections['default'].cursor() as cursor:
+                cursor.execute('INSERT INTO calc_suggestions '
+                               'VALUES(%s,%s, %s);',
+                               [randonID,UNIQUE_ID, ids[int(i)].id])
 
     elif school != "None" and industry == "None" and ethnicity == "None":
         with connection.cursor() as cursor:
             cursor.execute('SELECT p.firstname, p.lastname FROM calc_person p WHERE p.gender = %s and '
-                           'p.height BETWEEN %s AND %s AND  p.schoolname = %s',
-                           [gender, lowerBound, upperBound, school])
+                           'p.height BETWEEN %s AND %s AND  p.schoolname = %s AND p.age BETWEEN %s AND %s',
+                           [gender, lowerBound, upperBound, school, minBoundAge, maxBoundAge])
             rawdata = cursor.fetchall()
+
+        with connections['default'].cursor() as cursor:
+            cursor.execute('SELECT p.id FROM calc_person p WHERE p.gender = %s and '
+                           'p.height BETWEEN %s AND %s AND p.schoolname = %s AND p.age BETWEEN %s AND %s',
+                           [gender, lowerBound, upperBound, minBoundAge, maxBoundAge])
+            ids = namedtuplefetchall(cursor)
+        print("ids: ", ids[0].id)
+        deleteSuggestion()
+        for i in range(0, len(ids)):
+            print("i: ", type(i))
+            randonID = choosingUID()
+            with connections['default'].cursor() as cursor:
+                cursor.execute('INSERT INTO calc_suggestions '
+                               'VALUES(%s,%s, %s);',
+                               [randonID,UNIQUE_ID, ids[int(i)].id])
 
     elif school != "None" and industry == "None" and ethnicity != "None":
         with connections['default'].cursor() as cursor:
             cursor.execute('SELECT p.firstname, p.lastname FROM calc_person p WHERE p.gender = %s and '
-                           'p.height BETWEEN %s AND %s AND p.schoolname = %s AND  p.race = %s',
-                           [gender, lowerBound, upperBound, school, ethnicity])
+                           'p.height BETWEEN %s AND %s AND p.schoolname = %s AND  p.race = %s AND p.age BETWEEN %s AND %s',
+                           [gender, lowerBound, upperBound, school, ethnicity, minBoundAge, maxBoundAge])
             rawdata = cursor.fetchall()
+
+        with connections['default'].cursor() as cursor:
+            cursor.execute('SELECT p.id FROM calc_person p WHERE p.gender = %s and '
+                           'p.height BETWEEN %s AND %s AND p.schoolname = %s AND  p.race = %s AND p.age BETWEEN %s AND %s',
+                           [gender, lowerBound, upperBound, minBoundAge, maxBoundAge])
+            ids = namedtuplefetchall(cursor)
+        print("ids: ", ids[0].id)
+        deleteSuggestion()
+        for i in range(0, len(ids)):
+            print("i: ", type(i))
+            randonID = choosingUID()
+            with connections['default'].cursor() as cursor:
+                cursor.execute('INSERT INTO calc_suggestions '
+                               'VALUES(%s,%s, %s);',
+                               [randonID,UNIQUE_ID, ids[int(i)].id])
 
     elif school != "None" and industry != "None" and ethnicity == "None":
         with connections['default'].cursor() as cursor:
             cursor.execute('SELECT p.firstname, p.lastname FROM calc_person p WHERE p.gender = %s and '
-                           'p.height BETWEEN %s AND %s AND p.schoolname = %s AND  p.companyname = %s',
-                           [gender, lowerBound, upperBound, school, industry])
+                           'p.height BETWEEN %s AND %s AND p.schoolname = %s AND  p.companyname = %s AND p.age BETWEEN %s AND %s',
+                           [gender, lowerBound, upperBound, school, industry, minBoundAge, maxBoundAge])
             rawdata = cursor.fetchall()
+
+        with connections['default'].cursor() as cursor:
+            cursor.execute('SELECT p.id FROM calc_person p WHERE p.gender = %s and '
+                           'p.height BETWEEN %s AND %s AND p.schoolname = %s AND  p.companyname = %s AND p.age BETWEEN %s AND %s',
+                           [gender, lowerBound, upperBound, minBoundAge, maxBoundAge])
+            ids = namedtuplefetchall(cursor)
+        print("ids: ", ids[0].id)
+        deleteSuggestion()
+        for i in range(0, len(ids)):
+            print("i: ", type(i))
+            randonID = choosingUID()
+            with connections['default'].cursor() as cursor:
+                cursor.execute('INSERT INTO calc_suggestions '
+                               'VALUES(%s,%s, %s);',
+                               [randonID,UNIQUE_ID, ids[int(i)].id])
+
     else:
         with connections['default'].cursor() as cursor:
             cursor.execute('SELECT p.firstname, p.lastname FROM calc_person p WHERE p.gender = %s and '
-                           'p.height BETWEEN %s AND %s AND p.schoolname = %s AND p.race = %s AND p.companyname = %s',
-                           [gender, lowerBound, upperBound, school, ethnicity, industry])
+                           'p.height BETWEEN %s AND %s AND p.schoolname = %s AND p.race = %s AND p.companyname = %s '
+                           'AND p.age BETWEEN %s AND %s',
+                           [gender, lowerBound, upperBound, school, ethnicity, industry, minBoundAge, maxBoundAge])
         rawdata = cursor.fetchall()
 
+        with connections['default'].cursor() as cursor:
+            cursor.execute('SELECT p.id FROM calc_person p WHERE p.gender = %s and '
+                           'p.height BETWEEN %s AND %s AND p.schoolname = %s AND p.race = %s AND p.companyname = %s '
+                           'AND p.age BETWEEN %s AND %s',
+                           [gender, lowerBound, upperBound, minBoundAge, maxBoundAge])
+            ids = namedtuplefetchall(cursor)
+        print("ids: ", ids[0].id)
+        deleteSuggestion()
+        for i in range(0, len(ids)):
+            print("i: ", type(i))
+            randonID = choosingUID()
+            with connections['default'].cursor() as cursor:
+                cursor.execute('INSERT INTO calc_suggestions '
+                               'VALUES(%s,%s, %s);',
+                               [randonID,UNIQUE_ID, ids[int(i)].id])
 
 
 
     with connection.cursor() as cursor:
-        cursor.execute('SELECT * FROM calc_perference p WHERE p.uid = %s',
+        cursor.execute('DELETE FROM calc_perference p WHERE p.uid = %s',
                        [str(UNIQUE_ID)])
-        alreadyInclude = cursor.fetchall()
 
-    if len(alreadyInclude) == 0:
-        with connection.cursor() as cursor:
-            cursor.execute("INSERT INTO calc_perference "
-                           "VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s);",
-                           [UNIQUE_ID,  gender, lowerBound, upperBound, 0, 0,  ethnicity, school, school, industry])
-
-
-
+    with connection.cursor() as cursor:
+        cursor.execute("INSERT INTO calc_perference "
+                       "VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s);",
+                       [UNIQUE_ID,  gender, lowerBound, upperBound, minBoundAge, maxBoundAge,  ethnicity, school, school, industry])
 
     return render(request, 'results.html', {'all_post': rawdata})
 
@@ -316,3 +444,19 @@ def namedtuplefetchall(cursor):
     desc = cursor.description
     nt_result = namedtuple('Result', [col[0] for col in desc])
     return [nt_result(*row) for row in cursor.fetchall()]
+
+def choosingUID():
+    while 1:
+        uniqueId = random.randint(1,10000)
+        with connections['default'].cursor() as cursor:
+            cursor.execute('SELECT * FROM calc_suggestions p WHERE p.id = %s ',
+                           [str(uniqueId)])
+            rawData = cursor.fetchall()
+        print(rawData)
+        if len(rawData) == 0:
+            return uniqueId
+
+def deleteSuggestion():
+    with connections['default'].cursor() as cursor:
+        cursor.execute('DELETE FROM calc_suggestions p WHERE p.uid = %s ',
+                       [str(UNIQUE_ID)])

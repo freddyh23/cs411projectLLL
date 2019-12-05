@@ -5,9 +5,9 @@
 <link rel="stylesheet" type="text/css" href="{% static 'calc/style.css' %}" media="screen" />
 <div class = "navBar">
     <li><a href="{% url 'suggestions'%}">Suggestions</a></li>
+    <li><a href="{% url 'allusers'%}">All Users</a></li>
     <li><a href="{% url 'home'%}">Preferences</a></li>
     <li><a href="{% url 'profile'%}">Profile</a></li>
-    <li><a href="{% url 'login'%}">Login</a></li>
     <input type="text" placeholder="Search..">
 </div>
 <br><br><br>
@@ -22,14 +22,23 @@
 <div class = "logout_button">
     <!-- Delete profile button -->
     <form action="logout">
-    <input type="submit" class="logout" value="Logout" />
+        <input type="submit" class="logout" value="Logout" />
     </form>
 </div>
+
+<div class = "delete_profile_field">
+    <!-- Delete profile button -->
+    <form action="updatePage">
+        <input type="submit" class="Update Profile" value="Update Profile" />
+    </form>
+</div>
+
 <div class = "delete_profile_field">
     <!-- Delete profile button -->
     <form action="deletePerson">
-    <input type="submit" class="Delete Profile" value="Delete Profile" />
+        <input type="submit" class="Delete Profile" value="Delete Profile" />
     </form>
 </div>
+
 </body>
 </html>

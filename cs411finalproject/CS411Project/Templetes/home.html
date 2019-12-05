@@ -5,9 +5,9 @@
 <link rel="stylesheet" type="text/css" href="{% static 'calc/style.css' %}" media="screen" />
 <div class = "navBar">
     <li><a href="{% url 'suggestions'%}">Suggestions</a></li>
+    <li><a href="{% url 'allusers'%}">All Users</a></li>
     <li><a href="{% url 'home'%}">Preferences</a></li>
     <li><a href="{% url 'profile'%}">Profile</a></li>
-    <li><a href="{% url 'login'%}">Login</a></li>
     <input type="text" placeholder="Search..">
 </div>
 <br><br><br>
@@ -15,7 +15,7 @@
 
 <div class = "age">
     <form action="preferencePerson">
-    <p>Chose the upper bound of the age you want to date:</p>
+    <p>Chose the upper bound of the height you want to date: (required)</p>
  <!-- <span id="age_value1"></span> years -->
         <input type="text" name="maxBound" value=""><br>
 <!--    <div class="slidecontainer1">-->
@@ -32,7 +32,7 @@
 <!--            }-->
 <!--        </script>-->
 
-    <p>Chose the lower bound of the age you want to date:</p>
+    <p>Chose the lower bound of the height you want to date: (required)</p>
      <!-- <span id="age_value2"></span> years -->
         <input type="text" name="minBound" value=""><br>
 <!--    <div class="slidecontainer2">-->
@@ -48,7 +48,13 @@
 <!--            output2.innerHTML = this.value;-->
 <!--            }-->
 <!--        </script>-->
-        <p>Select the boxes that match your gender preference:</p>
+        <p>Chose the upper bound of the age you want to date: (required)</p>
+        <input type="text" name="maxBoundAge" value=""><br>
+
+        <p>Chose the lower bound of the age you want to date: (required)</p>
+        <input type="text" name="minBoundAge" value=""><br>
+
+        <p>Select the boxes that match your gender preference: (required)</p>
         <select name="gender">
             <option value="None">Please select gender</option>
             <option value="Male">Male</option>
