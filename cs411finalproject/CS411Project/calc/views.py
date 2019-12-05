@@ -214,11 +214,12 @@ def preferencePerson(request):
     school = request.GET.get('schools')
     industry = request.GET.get('industry')
     state = request.GET.get('state')
-    maxBoundAge = request.GET.get('maxBoundAge')
-    minBoundAge = request.GET.get('minBoundAge')
+    maxBoundAge = request.GET['maxBoundAge']
+    minBoundAge = request.GET['minBoundAge']
 
-    if upperBound == "" or lowerBound == "" or gender == "None"\
-            or maxBoundAge == "" or minBoundAge == "":
+    print("in perference")
+
+    if upperBound == "" or lowerBound == "" or gender == "None" or maxBoundAge == "" or minBoundAge == "":
         return render(request, 'home.html')
 
     global UNIQUE_ID
@@ -258,7 +259,7 @@ def preferencePerson(request):
                            'p.height BETWEEN %s AND %s AND  p.race = %s AND p.age BETWEEN %s AND %s',
                            [gender, lowerBound, upperBound, minBoundAge, maxBoundAge])
             ids = namedtuplefetchall(cursor)
-        print("ids: ", ids[0].id)
+        # print("ids: ", ids[0].id)
         deleteSuggestion()
         for i in range(0, len(ids)):
             print("i: ", type(i))
@@ -280,7 +281,7 @@ def preferencePerson(request):
                            'p.height BETWEEN %s AND %s AND  p.companyname = %s AND p.age BETWEEN %s AND %s',
                            [gender, lowerBound, upperBound, minBoundAge, maxBoundAge])
             ids = namedtuplefetchall(cursor)
-        print("ids: ", ids[0].id)
+        # print("ids: ", ids[0].id)
         deleteSuggestion()
         for i in range(0, len(ids)):
             print("i: ", type(i))
@@ -293,7 +294,7 @@ def preferencePerson(request):
 
     elif school == "None" and industry != "None" and ethnicity != "None":
         with connections['default'].cursor() as cursor:
-            cursor.execute('SELECT p.firstname, p.lastname FROM calc_person p WHERE p.gender = %s and '
+            cursor.execute('SELECT p.firstname, p.lastname FROM calc_person p WHERE p.gender = %s AND '
                            'p.height BETWEEN %s AND %s AND  p.race = %s AND  p.companyname = %s AND p.age BETWEEN %s AND %s',
                            [gender, lowerBound, upperBound, ethnicity, industry, minBoundAge, maxBoundAge])
             rawdata = cursor.fetchall()
@@ -304,7 +305,7 @@ def preferencePerson(request):
                            'p.height BETWEEN %s AND %s AND  p.race = %s AND  p.companyname = %s AND p.age BETWEEN %s AND %s',
                            [gender, lowerBound, upperBound, minBoundAge, maxBoundAge])
             ids = namedtuplefetchall(cursor)
-        print("ids: ", ids[0].id)
+        # print("ids: ", ids[0].id)
         deleteSuggestion()
         for i in range(0, len(ids)):
             print("i: ", type(i))
@@ -326,7 +327,7 @@ def preferencePerson(request):
                            'p.height BETWEEN %s AND %s AND p.schoolname = %s AND p.age BETWEEN %s AND %s',
                            [gender, lowerBound, upperBound, minBoundAge, maxBoundAge])
             ids = namedtuplefetchall(cursor)
-        print("ids: ", ids[0].id)
+        # print("ids: ", ids[0].id)
         deleteSuggestion()
         for i in range(0, len(ids)):
             print("i: ", type(i))
@@ -348,7 +349,7 @@ def preferencePerson(request):
                            'p.height BETWEEN %s AND %s AND p.schoolname = %s AND  p.race = %s AND p.age BETWEEN %s AND %s',
                            [gender, lowerBound, upperBound, minBoundAge, maxBoundAge])
             ids = namedtuplefetchall(cursor)
-        print("ids: ", ids[0].id)
+        # print("ids: ", ids[0].id)
         deleteSuggestion()
         for i in range(0, len(ids)):
             print("i: ", type(i))
@@ -370,7 +371,7 @@ def preferencePerson(request):
                            'p.height BETWEEN %s AND %s AND p.schoolname = %s AND  p.companyname = %s AND p.age BETWEEN %s AND %s',
                            [gender, lowerBound, upperBound, minBoundAge, maxBoundAge])
             ids = namedtuplefetchall(cursor)
-        print("ids: ", ids[0].id)
+        # print("ids: ", ids[0].id)
         deleteSuggestion()
         for i in range(0, len(ids)):
             print("i: ", type(i))
@@ -381,20 +382,22 @@ def preferencePerson(request):
                                [randonID,UNIQUE_ID, ids[int(i)].id])
 
     else:
+        print("in else")
         with connections['default'].cursor() as cursor:
             cursor.execute('SELECT p.firstname, p.lastname FROM calc_person p WHERE p.gender = %s and '
                            'p.height BETWEEN %s AND %s AND p.schoolname = %s AND p.race = %s AND p.companyname = %s '
                            'AND p.age BETWEEN %s AND %s',
                            [gender, lowerBound, upperBound, school, ethnicity, industry, minBoundAge, maxBoundAge])
-        rawdata = cursor.fetchall()
-
+            rawdata = cursor.fetchall()
+        print("after first slected")
         with connections['default'].cursor() as cursor:
             cursor.execute('SELECT p.id FROM calc_person p WHERE p.gender = %s and '
                            'p.height BETWEEN %s AND %s AND p.schoolname = %s AND p.race = %s AND p.companyname = %s '
                            'AND p.age BETWEEN %s AND %s',
                            [gender, lowerBound, upperBound, minBoundAge, maxBoundAge])
             ids = namedtuplefetchall(cursor)
-        print("ids: ", ids[0].id)
+        print("after second slected")
+        # print("ids: ", ids[0].id)
         deleteSuggestion()
         for i in range(0, len(ids)):
             print("i: ", type(i))
@@ -403,6 +406,7 @@ def preferencePerson(request):
                 cursor.execute('INSERT INTO calc_suggestions '
                                'VALUES(%s,%s, %s);',
                                [randonID,UNIQUE_ID, ids[int(i)].id])
+        print("after insert slected")
 
 
 

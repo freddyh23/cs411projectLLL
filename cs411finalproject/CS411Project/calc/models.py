@@ -25,7 +25,7 @@ class Company(models.Model):
     location = models.CharField(max_length=50)
 
 class Perference(models.Model):
-    uid = models.CharField(max_length=10, primary_key=True)
+    uid = models.IntegerField(max_length=10, primary_key=True)
     gender = models.CharField(max_length=20)
     heightlowbound = models.IntegerField()
     heighthighbound = models.IntegerField()
@@ -37,8 +37,8 @@ class Perference(models.Model):
     companyname = models.CharField(max_length=30)
 
 class Suggestions(models.Model):
-    id = models.CharField(max_length=10, primary_key=True)
-    uid = models.CharField(max_length=10)
+    id = models.IntegerField(max_length=10, primary_key=True)
+    uid = models.IntegerField(max_length=10)
     suggested = models.CharField(max_length=10)
 
 class Users(mod.Model):
@@ -48,4 +48,8 @@ class Users(mod.Model):
     # class Meta:
     #     app_label = 'user_data'
 
-
+class Scores(models.Model):
+    id = models.IntegerField(max_length=10, primary_key=True)
+    uid = models.IntegerField(max_length=10)
+    otherid = models.IntegerField(max_length=10)
+    score = models.IntegerField(max_length=10)
