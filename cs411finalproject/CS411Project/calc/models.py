@@ -37,7 +37,8 @@ class Perference(models.Model):
     companyname = models.CharField(max_length=30)
 
 class Suggestions(models.Model):
-    uid = models.CharField(max_length=10, primary_key=True)
+    id = models.CharField(max_length=10, primary_key=True)
+    uid = models.CharField(max_length=10)
     suggested = models.CharField(max_length=10)
 
 class Users(mod.Model):

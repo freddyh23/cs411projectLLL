@@ -1,8 +1,11 @@
 from django.shortcuts import render
 from .models import Users
 from django.db import connections, connection
+from collections import namedtuple
 import random
+import pyaes
 
+UNIQUE_ID = -1
 
 # Create your views here.
 def home(request):
@@ -35,14 +38,22 @@ def login_action(request):
 
     username = request.GET.get('username')
     password = request.GET.get('password')
+    encrypt_password = "empty"
 
-    results = list(Users.objects.using('users_db').filter(user_name=username, password=password))
 
-    if len(results) == 0:
+    for e in Users.objects.using('users_db').filter(user_name=username):
+        encrypt_password = e.password
+    print("encrypt_password: ", encrypt_password)
+
+    byte_key = "cs411cs411cs411cs411cs411cs411cs"
+
+    decrypt_password = AES_decrypt(byte_key, password)
+    if str(decrypt_password) != str(encrypt_password) or encrypt_password == "empty":
         return render(request, 'login.html')
 
+
     global UNIQUE_ID
-    for e in Users.objects.using('users_db').filter(user_name=username, password=password):
+    for e in Users.objects.using('users_db').filter(user_name=username):
         UNIQUE_ID = int(e.uid)
 
     # print("results: ", results.user_name)
@@ -50,14 +61,17 @@ def login_action(request):
     # user.user_name = username
     # user.password = password
     # user.save()
+    with connections['default'].cursor() as cursor:
+        cursor.execute('SELECT * FROM calc_person p Where p.id = %s',
+                       [UNIQUE_ID])
+        rawdata = cursor.fetchall()
 
-
-    return render(request, 'profile.html')
+    return render(request, 'profile.html', {'all_post': rawdata})
 
 def suggestions(request):
     return render(request, 'results.html')
 
-UNIQUE_ID = -1
+
 
 # updates profile with new height
 
@@ -150,9 +164,11 @@ def gettingInputFromCreate(request):
                        [str(uniqueId),  firstName, lastName, gender, height, ethnicity, industry, school,
                         industry, age])
 
+    encrypted_password = AES_encrpyt("cs411cs411cs411cs411cs411cs411cs", password)
+    print("encrypted_password", encrypted_password)
     user = Users()
     user.user_name = username
-    user.password = password
+    user.password =  encrypted_password
     user.uid = uniqueId
     user.save(using='users_db')
 
@@ -184,12 +200,29 @@ def preferencePerson(request):
     school = request.GET.get('schools')
     industry = request.GET.get('industry')
 
+    global UNIQUE_ID
+
     if school == "None" and industry == "None" and ethnicity == "None":
         with connections['default'].cursor() as cursor:
             cursor.execute('SELECT p.firstname, p.lastname FROM calc_person p WHERE p.gender = %s and '
                            'p.height BETWEEN %s AND %s ',
                            [gender, lowerBound, upperBound])
             rawdata = cursor.fetchall()
+
+        with connections['default'].cursor() as cursor:
+            cursor.execute('SELECT p.id FROM calc_person p WHERE p.gender = %s and '
+                           'p.height BETWEEN %s AND %s ',
+                           [gender, lowerBound, upperBound])
+            ids = namedtuplefetchall(cursor)
+        print("ids: ", ids[0].id)
+
+        for i in range(0, len(ids)):
+            print("i: ", type(i))
+            with connections['default'].cursor() as cursor:
+                cursor.execute('INSERT INTO calc_suggestions '
+                               'VALUES(%s, %s);',
+                       [UNIQUE_ID, ids[int(i)].id])
+
     elif school == "None" and industry == "None" and ethnicity != "None":
         with connections['default'].cursor() as cursor:
             cursor.execute('SELECT p.firstname, p.lastname FROM calc_person p WHERE p.gender = %s and '
@@ -235,14 +268,15 @@ def preferencePerson(request):
             cursor.execute('SELECT p.firstname, p.lastname FROM calc_person p WHERE p.gender = %s and '
                            'p.height BETWEEN %s AND %s AND p.schoolname = %s AND p.race = %s AND p.companyname = %s',
                            [gender, lowerBound, upperBound, school, ethnicity, industry])
-            rawdata = cursor.fetchall()
+        rawdata = cursor.fetchall()
 
-    global UNIQUE_ID
+
+
 
     with connection.cursor() as cursor:
         cursor.execute('SELECT * FROM calc_perference p WHERE p.uid = %s',
-                       [UNIQUE_ID])
-    alreadyInclude = cursor.fetchall()
+                       [str(UNIQUE_ID)])
+        alreadyInclude = cursor.fetchall()
 
     if len(alreadyInclude) == 0:
         with connection.cursor() as cursor:
@@ -250,4 +284,35 @@ def preferencePerson(request):
                            "VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s);",
                            [UNIQUE_ID,  gender, lowerBound, upperBound, 0, 0,  ethnicity, school, school, industry])
 
-    return render(request, 'results.html')
+
+
+
+    return render(request, 'results.html', {'all_post': rawdata})
+
+
+
+def AES_encrpyt(key, plaintext):
+    # A 256 bit (32 byte) key
+    if(len(key) == 32):
+        key1 = key.encode('utf-8')
+        aes = pyaes.AESModeOfOperationCTR(key1)
+        ciphertext = aes.encrypt(plaintext)
+    else:
+        ciphertext = "invalid"
+    return ciphertext
+
+def AES_decrypt(key, password):
+    if(len(key) == 32):
+        key1 = key.encode('utf-8')
+        aes = pyaes.AESModeOfOperationCTR(key1)
+        enc_password = aes.encrypt(password)
+    else:
+        enc_password = "invalid"
+    return enc_password
+
+
+def namedtuplefetchall(cursor):
+    "Return all rows from a cursor as a namedtuple"
+    desc = cursor.description
+    nt_result = namedtuple('Result', [col[0] for col in desc])
+    return [nt_result(*row) for row in cursor.fetchall()]
