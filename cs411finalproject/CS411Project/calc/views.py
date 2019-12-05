@@ -409,6 +409,9 @@ def preferencePerson(request):
         print("after insert slected")
 
 
+    with connection.cursor() as cursor:
+        cursor.execute('DELETE FROM calc_scores p WHERE p.uid = %s',
+                       [str(UNIQUE_ID)])
 
     with connection.cursor() as cursor:
         cursor.execute('DELETE FROM calc_perference p WHERE p.uid = %s',
